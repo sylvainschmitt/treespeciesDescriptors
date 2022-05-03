@@ -1,0 +1,18 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+_bookdown_*
+
+# protocols
+protocols/*.pdf
+protocols/*.html
+
+# maps
+maps
+
+# data
+data/traits
+
+# models
+models/*.Rdata
