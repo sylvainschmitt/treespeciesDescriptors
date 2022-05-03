@@ -20,12 +20,12 @@ See @herault_functional_2011 , waiting for my estimate for missing species.
 ```{r mortalitydata, eval=F}
 vroom::vroom("data/paracou.tsv") %>% 
   group_by(Genus, Species) %>% 
-  summarise(death = sum(CodeAlive == 0), trees = n(), time = max(CensusYear) - min(CensusYear)) %>% 
+  summarise(death = sum(CodeAlive == 0), trees = length(unique(idTree)), time = max(CensusYear) - min(CensusYear)) %>% 
   transmute(mortality = death / trees / time) %>% 
   vroom::vroom_write("data/species_mortality.tsv")
 ```
 
 ```{r mortalitytab}
 vroom::vroom("data/species_mortality.tsv") %>% 
-  kable(caption = "Mortality rate per year across species.")
+  kable(caption = "Mortality rate per year across species.") 
 ```
