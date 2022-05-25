@@ -24,7 +24,7 @@
 <meta name="author" content="Sylvain Schmitt" />
 
 
-<meta name="date" content="2022-05-03" />
+<meta name="date" content="2022-05-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -182,19 +182,139 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
 <h1><span class="header-section-number">Chapter 2</span> Performance descriptors</h1>
 <div id="growth" class="section level2">
 <h2><span class="header-section-number">2.1</span> Growth</h2>
-<p>See <span class="citation">Hérault <em>et al.</em> (<a href="#ref-herault_functional_2011" role="doc-biblioref">2011</a>)</span> , waiting for my estimate for missing species.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="performance-descriptors.html#cb1-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-2"><a href="performance-descriptors.html#cb1-2"></a><span class="st">  </span><span class="kw">filter</span>(BotaSource <span class="op">==</span><span class="st"> &quot;Bota&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-3"><a href="performance-descriptors.html#cb1-3"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species, idTree) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-4"><a href="performance-descriptors.html#cb1-4"></a><span class="st">  </span><span class="kw">arrange</span>(CensusYear) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-5"><a href="performance-descriptors.html#cb1-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">FirstDead =</span> <span class="kw">first</span>(CensusYear[CodeAlive <span class="op">==</span><span class="st"> </span><span class="dv">0</span>])) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-6"><a href="performance-descriptors.html#cb1-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">FirstDead =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(FirstDead), <span class="kw">max</span>(CensusYear)<span class="op">+</span><span class="dv">1</span>, FirstDead)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-7"><a href="performance-descriptors.html#cb1-7"></a><span class="st">  </span><span class="kw">filter</span>(CensusYear <span class="op">&lt;</span><span class="st"> </span>FirstDead) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-8"><a href="performance-descriptors.html#cb1-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">AGR =</span> (<span class="kw">last</span>(DBH) <span class="op">-</span><span class="st"> </span><span class="kw">first</span>(DBH))<span class="op">/</span>(<span class="kw">last</span>(CensusYear) <span class="op">-</span><span class="st"> </span><span class="kw">first</span>(CensusYear))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-9"><a href="performance-descriptors.html#cb1-9"></a><span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-10"><a href="performance-descriptors.html#cb1-10"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-11"><a href="performance-descriptors.html#cb1-11"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">AGR =</span> <span class="kw">median</span>(AGR)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-12"><a href="performance-descriptors.html#cb1-12"></a><span class="st">  </span>vroom<span class="op">::</span><span class="kw">vroom_write</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="performance-descriptors.html#cb2-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-2"><a href="performance-descriptors.html#cb2-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Median of annual growth rate of all individuals across species (cm/year).&quot;</span>) </span></code></pre></div>
+<table>
+<caption><span id="tab:growthtab">Table 2.1: </span>Median of annual growth rate of all individuals across species (cm/year).</caption>
+<thead>
+<tr class="header">
+<th align="left">Genus</th>
+<th align="left">Species</th>
+<th align="right">AGR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bocoa</td>
+<td align="left">prouacensis</td>
+<td align="right">0.0574726</td>
+</tr>
+<tr class="even">
+<td align="left">Chaetocarpus</td>
+<td align="left">schomburgkianus</td>
+<td align="right">0.0972614</td>
+</tr>
+<tr class="odd">
+<td align="left">Chrysophyllum</td>
+<td align="left">sanguinolentum</td>
+<td align="right">0.1591549</td>
+</tr>
+<tr class="even">
+<td align="left">Dicorynia</td>
+<td align="left">guianensis</td>
+<td align="right">0.2387324</td>
+</tr>
+<tr class="odd">
+<td align="left">Eperua</td>
+<td align="left">falcata</td>
+<td align="right">0.1426906</td>
+</tr>
+<tr class="even">
+<td align="left">Eperua</td>
+<td align="left">grandiflora</td>
+<td align="right">0.3050470</td>
+</tr>
+<tr class="odd">
+<td align="left">Eschweilera</td>
+<td align="left">sagotiana</td>
+<td align="right">0.0928404</td>
+</tr>
+<tr class="even">
+<td align="left">Goupia</td>
+<td align="left">glabra</td>
+<td align="right">0.1044454</td>
+</tr>
+<tr class="odd">
+<td align="left">Gustavia</td>
+<td align="left">hexapetala</td>
+<td align="right">0.0454728</td>
+</tr>
+<tr class="even">
+<td align="left">Lecythis</td>
+<td align="left">persistens subsp. aurantiaca</td>
+<td align="right">0.0454728</td>
+</tr>
+<tr class="odd">
+<td align="left">Lecythis</td>
+<td align="left">poiteaui</td>
+<td align="right">0.0603691</td>
+</tr>
+<tr class="even">
+<td align="left">Licania</td>
+<td align="left">membranacea</td>
+<td align="right">0.2180303</td>
+</tr>
+<tr class="odd">
+<td align="left">Manilkara</td>
+<td align="left">bidentata</td>
+<td align="right">0.2350199</td>
+</tr>
+<tr class="even">
+<td align="left">Pradosia</td>
+<td align="left">cochlearia</td>
+<td align="right">0.1267751</td>
+</tr>
+<tr class="odd">
+<td align="left">Protium</td>
+<td align="left">opacum subsp. rabelianum</td>
+<td align="right">0.2273642</td>
+</tr>
+<tr class="even">
+<td align="left">Qualea</td>
+<td align="left">rosea</td>
+<td align="right">0.3031178</td>
+</tr>
+<tr class="odd">
+<td align="left">Symphonia</td>
+<td align="left">sp.1</td>
+<td align="right">0.2910262</td>
+</tr>
+<tr class="even">
+<td align="left">Tachigali</td>
+<td align="left">melinonii</td>
+<td align="right">0.7141031</td>
+</tr>
+<tr class="odd">
+<td align="left">Virola</td>
+<td align="left">michelii</td>
+<td align="right">0.3023944</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="mortality" class="section level2">
 <h2><span class="header-section-number">2.2</span> Mortality</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="performance-descriptors.html#cb1-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-2"><a href="performance-descriptors.html#cb1-2"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-3"><a href="performance-descriptors.html#cb1-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">death =</span> <span class="kw">sum</span>(CodeAlive <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dt">trees =</span> <span class="kw">length</span>(<span class="kw">unique</span>(idTree)), <span class="dt">time =</span> <span class="kw">max</span>(CensusYear) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(CensusYear)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-4"><a href="performance-descriptors.html#cb1-4"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">mortality =</span> death <span class="op">/</span><span class="st"> </span>trees <span class="op">/</span><span class="st"> </span>time) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-5"><a href="performance-descriptors.html#cb1-5"></a><span class="st">  </span>vroom<span class="op">::</span><span class="kw">vroom_write</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="performance-descriptors.html#cb2-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb2-2"><a href="performance-descriptors.html#cb2-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Mortality rate per year across species.&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="performance-descriptors.html#cb3-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-2"><a href="performance-descriptors.html#cb3-2"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-3"><a href="performance-descriptors.html#cb3-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">death =</span> <span class="kw">sum</span>(CodeAlive <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dt">trees =</span> <span class="kw">length</span>(<span class="kw">unique</span>(idTree)), <span class="dt">time =</span> <span class="kw">max</span>(CensusYear) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(CensusYear)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-4"><a href="performance-descriptors.html#cb3-4"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">mortality =</span> death <span class="op">/</span><span class="st"> </span>trees <span class="op">/</span><span class="st"> </span>time <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-5"><a href="performance-descriptors.html#cb3-5"></a><span class="st">  </span>vroom<span class="op">::</span><span class="kw">vroom_write</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="performance-descriptors.html#cb4-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-2"><a href="performance-descriptors.html#cb4-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Annual mortality rate across species (%/year).&quot;</span>) </span></code></pre></div>
 <table>
-<caption><span id="tab:mortalitytab">Table 2.1: </span>Mortality rate per year across species.</caption>
+<caption><span id="tab:mortalitytab">Table 2.2: </span>Annual mortality rate across species (%/year).</caption>
 <thead>
 <tr class="header">
 <th align="left">Genus</th>
@@ -204,89 +324,83 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
 <tbody>
 <tr class="odd">
 <td align="left">Bocoa</td>
-<td align="right">0.0091462</td>
+<td align="right">0.9146202</td>
 </tr>
 <tr class="even">
 <td align="left">Chaetocarpus</td>
-<td align="right">0.0043879</td>
+<td align="right">0.4387917</td>
 </tr>
 <tr class="odd">
 <td align="left">Chrysophyllum</td>
-<td align="right">0.0116149</td>
+<td align="right">1.1614921</td>
 </tr>
 <tr class="even">
 <td align="left">Dicorynia</td>
-<td align="right">0.0059891</td>
+<td align="right">0.5989088</td>
 </tr>
 <tr class="odd">
 <td align="left">Eperua</td>
-<td align="right">0.0042216</td>
+<td align="right">0.4221584</td>
 </tr>
 <tr class="even">
 <td align="left">Eperua</td>
-<td align="right">0.0041674</td>
+<td align="right">0.4167433</td>
 </tr>
 <tr class="odd">
 <td align="left">Eschweilera</td>
-<td align="right">0.0030302</td>
+<td align="right">0.3030218</td>
 </tr>
 <tr class="even">
 <td align="left">Goupia</td>
-<td align="right">0.0048103</td>
+<td align="right">0.4810348</td>
 </tr>
 <tr class="odd">
 <td align="left">Gustavia</td>
-<td align="right">0.0054653</td>
+<td align="right">0.5465299</td>
 </tr>
 <tr class="even">
 <td align="left">Lecythis</td>
-<td align="right">0.0042159</td>
+<td align="right">0.4215946</td>
 </tr>
 <tr class="odd">
 <td align="left">Lecythis</td>
-<td align="right">0.0029166</td>
+<td align="right">0.2916586</td>
 </tr>
 <tr class="even">
 <td align="left">Licania</td>
-<td align="right">0.0070397</td>
+<td align="right">0.7039703</td>
 </tr>
 <tr class="odd">
 <td align="left">Manilkara</td>
-<td align="right">0.0068796</td>
+<td align="right">0.6879607</td>
 </tr>
 <tr class="even">
 <td align="left">Pradosia</td>
-<td align="right">0.0045136</td>
+<td align="right">0.4513623</td>
 </tr>
 <tr class="odd">
 <td align="left">Protium</td>
-<td align="right">0.0116609</td>
+<td align="right">1.1660854</td>
 </tr>
 <tr class="even">
 <td align="left">Qualea</td>
-<td align="right">0.0060876</td>
+<td align="right">0.6087557</td>
 </tr>
 <tr class="odd">
 <td align="left">Symphonia</td>
-<td align="right">0.0065025</td>
+<td align="right">0.6502512</td>
 </tr>
 <tr class="even">
 <td align="left">Tachigali</td>
-<td align="right">0.0070099</td>
+<td align="right">0.7009892</td>
 </tr>
 <tr class="odd">
 <td align="left">Virola</td>
-<td align="right">0.0054698</td>
+<td align="right">0.5469755</td>
 </tr>
 </tbody>
 </table>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-herault_functional_2011">
-<p>Hérault, B., Bachelot, B., Poorter, L., Rossi, V., Bongers, F., Chave, J., Paine, C.E.T., Wagner, F. &amp; Baraloto, C. (2011). Functional traits shape ontogenetic growth trajectories of rain forest tree species: Plant traits shape growth trajectory. <em>Journal of Ecology</em>, <strong>99</strong>, 1431–1440. Retrieved from <a href="http://doi.wiley.com/10.1111/j.1365-2745.2011.01883.x">http://doi.wiley.com/10.1111/j.1365-2745.2011.01883.x</a></p>
 </div>
 </div>
             </section>

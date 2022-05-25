@@ -13,7 +13,25 @@ opts_chunk$set(
 
 ## Growth
 
-See @herault_functional_2011 , waiting for my estimate for missing species.
+```{r growthdata, eval=F}
+vroom::vroom("data/paracou.tsv") %>% 
+  filter(BotaSource == "Bota") %>% 
+  group_by(Genus, Species, idTree) %>% 
+  arrange(CensusYear) %>% 
+  mutate(FirstDead = first(CensusYear[CodeAlive == 0])) %>% 
+  mutate(FirstDead = ifelse(is.na(FirstDead), max(CensusYear)+1, FirstDead)) %>% 
+  filter(CensusYear < FirstDead) %>% 
+  summarise(AGR = (last(DBH) - first(DBH))/(last(CensusYear) - first(CensusYear))) %>% 
+  na.omit() %>% 
+  group_by(Genus, Species) %>% 
+  summarise(AGR = median(AGR)) %>% 
+  vroom::vroom_write("data/species_growth.tsv")
+```
+
+```{r growthtab}
+vroom::vroom("data/species_growth.tsv") %>% 
+  kable(caption = "Median of annual growth rate of all individuals across species (cm/year).") 
+```
 
 ## Mortality
 
@@ -21,11 +39,11 @@ See @herault_functional_2011 , waiting for my estimate for missing species.
 vroom::vroom("data/paracou.tsv") %>% 
   group_by(Genus, Species) %>% 
   summarise(death = sum(CodeAlive == 0), trees = length(unique(idTree)), time = max(CensusYear) - min(CensusYear)) %>% 
-  transmute(mortality = death / trees / time) %>% 
+  transmute(mortality = death / trees / time * 100) %>% 
   vroom::vroom_write("data/species_mortality.tsv")
 ```
 
 ```{r mortalitytab}
 vroom::vroom("data/species_mortality.tsv") %>% 
-  kable(caption = "Mortality rate per year across species.") 
+  kable(caption = "Annual mortality rate across species (%/year).") 
 ```

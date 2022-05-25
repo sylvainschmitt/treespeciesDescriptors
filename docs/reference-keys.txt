@@ -16,3 +16,4 @@ tab:introsp
 tab:introparacoutab
 tab:spenvdatatab
 tab:mortalitytab
+tab:growthtab

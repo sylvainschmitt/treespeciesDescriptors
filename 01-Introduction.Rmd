@@ -26,8 +26,8 @@ kable(species, caption = "Studied species")
 guyafor <- DBI::dbConnect(RSQLite::SQLite(), dbname = "data/guyafor.sql")
 trees <- tbl(guyafor, "inventory") %>% 
   filter(Forest == "Paracou") %>% 
+  filter(paste(Genus, Species) %in% local(species$Species)) %>% 
   collect() %>% 
-  filter(paste(Genus, Species) %in% species$SpeciesParacou) %>% 
   mutate(DBH = CircCorr/pi)
 DBI::dbDisconnect(guyafor) ; rm(guyafor)
 vroom::vroom_write(trees, "data/paracou.tsv")
