@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Performance descriptors | tree species descriptors</title>
   <meta name="description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Performance descriptors | tree species descriptors" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Sylvain Schmitt" />
 
 
-<meta name="date" content="2022-05-25" />
+<meta name="date" content="2023-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 <link rel="prev" href="environmental-descriptors.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,24 +49,24 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script async defer src="https://hypothes.is/embed.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -118,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="html/style.css" type="text/css" />
 </head>
@@ -136,11 +137,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
 <li class="chapter" data-level="0.1" data-path="introduction.html"><a href="introduction.html#species"><i class="fa fa-check"></i><b>0.1</b> Species</a></li>
 <li class="chapter" data-level="0.2" data-path="introduction.html"><a href="introduction.html#individuals"><i class="fa fa-check"></i><b>0.2</b> Individuals</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html"><i class="fa fa-check"></i><b>1</b> Environmental descriptors</a><ul>
+<li class="chapter" data-level="1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html"><i class="fa fa-check"></i><b>1</b> Environmental descriptors</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#twi-topographic-wetness-index"><i class="fa fa-check"></i><b>1.1</b> TWI: Topographic Wetness Index</a></li>
 <li class="chapter" data-level="1.2" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hand-height-above-nearest-drainage"><i class="fa fa-check"></i><b>1.2</b> HAND: Height Above Nearest Drainage</a></li>
 <li class="chapter" data-level="1.3" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hydromorphy"><i class="fa fa-check"></i><b>1.3</b> Hydromorphy</a></li>
@@ -150,7 +153,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#correlations"><i class="fa fa-check"></i><b>1.7</b> Correlations</a></li>
 <li class="chapter" data-level="1.8" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#species-data"><i class="fa fa-check"></i><b>1.8</b> Species data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="performance-descriptors.html"><a href="performance-descriptors.html"><i class="fa fa-check"></i><b>2</b> Performance descriptors</a><ul>
+<li class="chapter" data-level="2" data-path="performance-descriptors.html"><a href="performance-descriptors.html"><i class="fa fa-check"></i><b>2</b> Performance descriptors</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="performance-descriptors.html"><a href="performance-descriptors.html#growth"><i class="fa fa-check"></i><b>2.1</b> Growth</a></li>
 <li class="chapter" data-level="2.2" data-path="performance-descriptors.html"><a href="performance-descriptors.html#mortality"><i class="fa fa-check"></i><b>2.2</b> Mortality</a></li>
 </ul></li>
@@ -175,27 +179,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div class = rmdreview>
-This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
-</div>
-<div id="performance-descriptors" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Performance descriptors</h1>
-<div id="growth" class="section level2">
-<h2><span class="header-section-number">2.1</span> Growth</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="performance-descriptors.html#cb1-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-2"><a href="performance-descriptors.html#cb1-2"></a><span class="st">  </span><span class="kw">filter</span>(BotaSource <span class="op">==</span><span class="st"> &quot;Bota&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-3"><a href="performance-descriptors.html#cb1-3"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species, idTree) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-4"><a href="performance-descriptors.html#cb1-4"></a><span class="st">  </span><span class="kw">arrange</span>(CensusYear) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-5"><a href="performance-descriptors.html#cb1-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">FirstDead =</span> <span class="kw">first</span>(CensusYear[CodeAlive <span class="op">==</span><span class="st"> </span><span class="dv">0</span>])) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-6"><a href="performance-descriptors.html#cb1-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">FirstDead =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(FirstDead), <span class="kw">max</span>(CensusYear)<span class="op">+</span><span class="dv">1</span>, FirstDead)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-7"><a href="performance-descriptors.html#cb1-7"></a><span class="st">  </span><span class="kw">filter</span>(CensusYear <span class="op">&lt;</span><span class="st"> </span>FirstDead) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-8"><a href="performance-descriptors.html#cb1-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">AGR =</span> (<span class="kw">last</span>(DBH) <span class="op">-</span><span class="st"> </span><span class="kw">first</span>(DBH))<span class="op">/</span>(<span class="kw">last</span>(CensusYear) <span class="op">-</span><span class="st"> </span><span class="kw">first</span>(CensusYear))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-9"><a href="performance-descriptors.html#cb1-9"></a><span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-10"><a href="performance-descriptors.html#cb1-10"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-11"><a href="performance-descriptors.html#cb1-11"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">AGR =</span> <span class="kw">median</span>(AGR)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-12"><a href="performance-descriptors.html#cb1-12"></a><span class="st">  </span>vroom<span class="op">::</span><span class="kw">vroom_write</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="performance-descriptors.html#cb2-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb2-2"><a href="performance-descriptors.html#cb2-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Median of annual growth rate of all individuals across species (cm/year).&quot;</span>) </span></code></pre></div>
+<div id="performance-descriptors" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Performance descriptors<a href="performance-descriptors.html#performance-descriptors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="growth" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Growth<a href="performance-descriptors.html#growth" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="performance-descriptors.html#cb14-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="performance-descriptors.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(BotaSource <span class="sc">==</span> <span class="st">&quot;Bota&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="performance-descriptors.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="performance-descriptors.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="performance-descriptors.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FirstDead =</span> <span class="fu">first</span>(CensusYear[CodeAlive <span class="sc">==</span> <span class="dv">0</span>])) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="performance-descriptors.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FirstDead =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(FirstDead), <span class="fu">max</span>(CensusYear)<span class="sc">+</span><span class="dv">1</span>, FirstDead)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="performance-descriptors.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CensusYear <span class="sc">&lt;</span> FirstDead) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-8"><a href="performance-descriptors.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AGR =</span> (<span class="fu">last</span>(DBH) <span class="sc">-</span> <span class="fu">first</span>(DBH))<span class="sc">/</span>(<span class="fu">last</span>(CensusYear) <span class="sc">-</span> <span class="fu">first</span>(CensusYear))) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-9"><a href="performance-descriptors.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-10"><a href="performance-descriptors.html#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-11"><a href="performance-descriptors.html#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AGR =</span> <span class="fu">median</span>(AGR)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-12"><a href="performance-descriptors.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="performance-descriptors.html#cb15-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="performance-descriptors.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Median of annual growth rate of all individuals across species (cm/year).&quot;</span>) </span></code></pre></div>
 <table>
 <caption><span id="tab:growthtab">Table 2.1: </span>Median of annual growth rate of all individuals across species (cm/year).</caption>
 <thead>
@@ -304,99 +305,122 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
 </tbody>
 </table>
 </div>
-<div id="mortality" class="section level2">
-<h2><span class="header-section-number">2.2</span> Mortality</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="performance-descriptors.html#cb3-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-2"><a href="performance-descriptors.html#cb3-2"></a><span class="st">  </span><span class="kw">group_by</span>(Genus, Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-3"><a href="performance-descriptors.html#cb3-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">death =</span> <span class="kw">sum</span>(CodeAlive <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dt">trees =</span> <span class="kw">length</span>(<span class="kw">unique</span>(idTree)), <span class="dt">time =</span> <span class="kw">max</span>(CensusYear) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(CensusYear)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-4"><a href="performance-descriptors.html#cb3-4"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">mortality =</span> death <span class="op">/</span><span class="st"> </span>trees <span class="op">/</span><span class="st"> </span>time <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-5"><a href="performance-descriptors.html#cb3-5"></a><span class="st">  </span>vroom<span class="op">::</span><span class="kw">vroom_write</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="performance-descriptors.html#cb4-1"></a>vroom<span class="op">::</span><span class="kw">vroom</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb4-2"><a href="performance-descriptors.html#cb4-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Annual mortality rate across species (%/year).&quot;</span>) </span></code></pre></div>
+<div id="mortality" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Mortality<a href="performance-descriptors.html#mortality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="performance-descriptors.html#cb16-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="performance-descriptors.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="performance-descriptors.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">death =</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(CodeAlive <span class="sc">==</span> <span class="dv">0</span>), <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb16-4"><a href="performance-descriptors.html#cb16-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_min =</span> <span class="fu">min</span>(CensusYear),</span>
+<span id="cb16-5"><a href="performance-descriptors.html#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_max =</span> <span class="fu">max</span>(CensusYear)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="performance-descriptors.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="performance-descriptors.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mortality =</span> <span class="fu">sum</span>(death) <span class="sc">/</span> <span class="fu">n</span>() <span class="sc">/</span> (<span class="fu">max</span>(y_max) <span class="sc">-</span> <span class="fu">min</span>(y_min)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="performance-descriptors.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="performance-descriptors.html#cb17-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/species_mortality.tsv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="performance-descriptors.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Annual mortality rate across species (%/year).&quot;</span>) </span></code></pre></div>
 <table>
 <caption><span id="tab:mortalitytab">Table 2.2: </span>Annual mortality rate across species (%/year).</caption>
 <thead>
 <tr class="header">
 <th align="left">Genus</th>
+<th align="left">Species</th>
 <th align="right">mortality</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Bocoa</td>
-<td align="right">0.9146202</td>
+<td align="left">prouacensis</td>
+<td align="right">0.7637079</td>
 </tr>
 <tr class="even">
 <td align="left">Chaetocarpus</td>
-<td align="right">0.4387917</td>
+<td align="left">schomburgkianus</td>
+<td align="right">0.3306836</td>
 </tr>
 <tr class="odd">
 <td align="left">Chrysophyllum</td>
-<td align="right">1.1614921</td>
+<td align="left">sanguinolentum</td>
+<td align="right">0.9306827</td>
 </tr>
 <tr class="even">
 <td align="left">Dicorynia</td>
-<td align="right">0.5989088</td>
+<td align="left">guianensis</td>
+<td align="right">0.5329273</td>
 </tr>
 <tr class="odd">
 <td align="left">Eperua</td>
-<td align="right">0.4221584</td>
+<td align="left">falcata</td>
+<td align="right">0.2835127</td>
 </tr>
 <tr class="even">
 <td align="left">Eperua</td>
-<td align="right">0.4167433</td>
+<td align="left">grandiflora</td>
+<td align="right">0.3125575</td>
 </tr>
 <tr class="odd">
 <td align="left">Eschweilera</td>
-<td align="right">0.3030218</td>
+<td align="left">sagotiana</td>
+<td align="right">0.2043473</td>
 </tr>
 <tr class="even">
 <td align="left">Goupia</td>
-<td align="right">0.4810348</td>
+<td align="left">glabra</td>
+<td align="right">0.3581037</td>
 </tr>
 <tr class="odd">
 <td align="left">Gustavia</td>
-<td align="right">0.5465299</td>
+<td align="left">hexapetala</td>
+<td align="right">0.3743356</td>
 </tr>
 <tr class="even">
 <td align="left">Lecythis</td>
-<td align="right">0.4215946</td>
+<td align="left">persistens subsp. aurantiaca</td>
+<td align="right">0.2827495</td>
 </tr>
 <tr class="odd">
 <td align="left">Lecythis</td>
-<td align="right">0.2916586</td>
+<td align="left">poiteaui</td>
+<td align="right">0.2138829</td>
 </tr>
 <tr class="even">
 <td align="left">Licania</td>
-<td align="right">0.7039703</td>
+<td align="left">membranacea</td>
+<td align="right">0.4911947</td>
 </tr>
 <tr class="odd">
 <td align="left">Manilkara</td>
-<td align="right">0.6879607</td>
+<td align="left">bidentata</td>
+<td align="right">0.6019656</td>
 </tr>
 <tr class="even">
 <td align="left">Pradosia</td>
-<td align="right">0.4513623</td>
+<td align="left">cochlearia</td>
+<td align="right">0.3309990</td>
 </tr>
 <tr class="odd">
 <td align="left">Protium</td>
-<td align="right">1.1660854</td>
+<td align="left">opacum subsp. rabelianum</td>
+<td align="right">0.8718396</td>
 </tr>
 <tr class="even">
 <td align="left">Qualea</td>
-<td align="right">0.6087557</td>
+<td align="left">rosea</td>
+<td align="right">0.4662810</td>
 </tr>
 <tr class="odd">
 <td align="left">Symphonia</td>
-<td align="right">0.6502512</td>
+<td align="left">sp.1</td>
+<td align="right">0.3944652</td>
 </tr>
 <tr class="even">
 <td align="left">Tachigali</td>
-<td align="right">0.7009892</td>
+<td align="left">melinonii</td>
+<td align="right">0.5140587</td>
 </tr>
 <tr class="odd">
 <td align="left">Virola</td>
-<td align="right">0.5469755</td>
+<td align="left">michelii</td>
+<td align="right">0.4263192</td>
 </tr>
 </tbody>
 </table>
@@ -413,7 +437,6 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -432,6 +455,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -452,6 +476,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

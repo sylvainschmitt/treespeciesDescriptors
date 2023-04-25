@@ -5,8 +5,8 @@ author: "Sylvain Schmitt"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
-bibliography: /home/sylvain/Documents/Bibliography/library.bib
+csl: biblio/mee.csl
+bibliography: biblio/library.bib
 link-citations: yes
 colorlinks: yes
 description: "Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses."

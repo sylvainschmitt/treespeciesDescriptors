@@ -1,3 +1,8 @@
+tab:introsp
+tab:introparacoutab
+tab:spenvdatatab
+tab:growthtab
+tab:mortalitytab
 species
 individuals
 environmental-descriptors
@@ -12,8 +17,3 @@ species-data
 performance-descriptors
 growth
 mortality
-tab:introsp
-tab:introparacoutab
-tab:spenvdatatab
-tab:mortalitytab
-tab:growthtab

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction | tree species descriptors</title>
+  <title>Page not found | tree species descriptors</title>
   <meta name="description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction | tree species descriptors" />
+  <meta property="og:title" content="Page not found | tree species descriptors" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction | tree species descriptors" />
+  <meta name="twitter:title" content="Page not found | tree species descriptors" />
   
   <meta name="twitter:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="environmental-descriptors.html"/>
+
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -179,212 +179,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1 unnumbered hasAnchor">
-<h1>Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses.</p>
-<div id="species" class="section level2 hasAnchor" number="0.1">
-<h2><span class="header-section-number">0.1</span> Species<a href="introduction.html#species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&quot;data/Species_list.xlsx&quot;</span>)</span>
-<span id="cb1-2"><a href="introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(species, <span class="at">caption =</span> <span class="st">&quot;Studied species&quot;</span>)</span></code></pre></div>
-<table>
-<caption><span id="tab:introsp">Table 0.1: </span>Studied species</caption>
-<thead>
-<tr class="header">
-<th align="left">Species</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Bocoa prouacensis</td>
-</tr>
-<tr class="even">
-<td align="left">Chaetocarpus schomburgkianus</td>
-</tr>
-<tr class="odd">
-<td align="left">Chrysophyllum sanguinolentum</td>
-</tr>
-<tr class="even">
-<td align="left">Dicorynia guianensis</td>
-</tr>
-<tr class="odd">
-<td align="left">Eperua falcata</td>
-</tr>
-<tr class="even">
-<td align="left">Eperua grandiflora</td>
-</tr>
-<tr class="odd">
-<td align="left">Eschweilera sagotiana</td>
-</tr>
-<tr class="even">
-<td align="left">Goupia glabra</td>
-</tr>
-<tr class="odd">
-<td align="left">Gustavia hexapetala</td>
-</tr>
-<tr class="even">
-<td align="left">Lecythis persistens subsp. aurantiaca</td>
-</tr>
-<tr class="odd">
-<td align="left">Lecythis poiteaui</td>
-</tr>
-<tr class="even">
-<td align="left">Licania membranacea</td>
-</tr>
-<tr class="odd">
-<td align="left">Manilkara bidentata</td>
-</tr>
-<tr class="even">
-<td align="left">Pradosia cochlearia</td>
-</tr>
-<tr class="odd">
-<td align="left">Protium opacum subsp. rabelianum</td>
-</tr>
-<tr class="even">
-<td align="left">Qualea rosea</td>
-</tr>
-<tr class="odd">
-<td align="left">Symphonia sp.1</td>
-</tr>
-<tr class="even">
-<td align="left">Tachigali melinonii</td>
-</tr>
-<tr class="odd">
-<td align="left">Virola michelii</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="individuals" class="section level2 hasAnchor" number="0.2">
-<h2><span class="header-section-number">0.2</span> Individuals<a href="introduction.html#individuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction.html#cb2-1" aria-hidden="true" tabindex="-1"></a>guyafor <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">&quot;data/guyafor.sql&quot;</span>)</span>
-<span id="cb2-2"><a href="introduction.html#cb2-2" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">tbl</span>(guyafor, <span class="st">&quot;inventory&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="introduction.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Forest <span class="sc">==</span> <span class="st">&quot;Paracou&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="introduction.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">paste</span>(Genus, Species) <span class="sc">%in%</span> <span class="fu">local</span>(species<span class="sc">$</span>Species)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="introduction.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="introduction.html#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr<span class="sc">/</span>pi)</span>
-<span id="cb2-7"><a href="introduction.html#cb2-7" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(guyafor) ; <span class="fu">rm</span>(guyafor)</span>
-<span id="cb2-8"><a href="introduction.html#cb2-8" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom_write</span>(trees, <span class="st">&quot;data/paracou.tsv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>, <span class="at">show_col_types =</span> F) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="introduction.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="introduction.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="introduction.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Number of individuals per species&quot;</span>)</span></code></pre></div>
-<table>
-<caption><span id="tab:introparacoutab">Table 0.2: </span>Number of individuals per species</caption>
-<thead>
-<tr class="header">
-<th align="left">Genus</th>
-<th align="left">Species</th>
-<th align="right">N</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Bocoa</td>
-<td align="left">prouacensis</td>
-<td align="right">30561</td>
-</tr>
-<tr class="even">
-<td align="left">Chaetocarpus</td>
-<td align="left">schomburgkianus</td>
-<td align="right">8729</td>
-</tr>
-<tr class="odd">
-<td align="left">Chrysophyllum</td>
-<td align="left">sanguinolentum</td>
-<td align="right">5517</td>
-</tr>
-<tr class="even">
-<td align="left">Dicorynia</td>
-<td align="left">guianensis</td>
-<td align="right">16815</td>
-</tr>
-<tr class="odd">
-<td align="left">Eperua</td>
-<td align="left">falcata</td>
-<td align="right">64077</td>
-</tr>
-<tr class="even">
-<td align="left">Eperua</td>
-<td align="left">grandiflora</td>
-<td align="right">18242</td>
-</tr>
-<tr class="odd">
-<td align="left">Eschweilera</td>
-<td align="left">sagotiana</td>
-<td align="right">82706</td>
-</tr>
-<tr class="even">
-<td align="left">Goupia</td>
-<td align="left">glabra</td>
-<td align="right">17900</td>
-</tr>
-<tr class="odd">
-<td align="left">Gustavia</td>
-<td align="left">hexapetala</td>
-<td align="right">17907</td>
-</tr>
-<tr class="even">
-<td align="left">Lecythis</td>
-<td align="left">persistens subsp. aurantiaca</td>
-<td align="right">97172</td>
-</tr>
-<tr class="odd">
-<td align="left">Lecythis</td>
-<td align="left">poiteaui</td>
-<td align="right">7531</td>
-</tr>
-<tr class="even">
-<td align="left">Licania</td>
-<td align="left">membranacea</td>
-<td align="right">19342</td>
-</tr>
-<tr class="odd">
-<td align="left">Manilkara</td>
-<td align="left">bidentata</td>
-<td align="right">3653</td>
-</tr>
-<tr class="even">
-<td align="left">Pradosia</td>
-<td align="left">cochlearia</td>
-<td align="right">19912</td>
-</tr>
-<tr class="odd">
-<td align="left">Protium</td>
-<td align="left">opacum subsp. rabelianum</td>
-<td align="right">11484</td>
-</tr>
-<tr class="even">
-<td align="left">Qualea</td>
-<td align="left">rosea</td>
-<td align="right">17446</td>
-</tr>
-<tr class="odd">
-<td align="left">Symphonia</td>
-<td align="left">sp.1</td>
-<td align="right">15860</td>
-</tr>
-<tr class="even">
-<td align="left">Tachigali</td>
-<td align="left">melinonii</td>
-<td align="right">4433</td>
-</tr>
-<tr class="odd">
-<td align="left">Virola</td>
-<td align="left">michelii</td>
-<td align="right">7415</td>
-</tr>
-</tbody>
-</table>
-
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="environmental-descriptors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

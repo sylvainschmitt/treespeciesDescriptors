@@ -37,9 +37,12 @@ vroom::vroom("data/species_growth.tsv") %>%
 
 ```{r mortalitydata, eval=F}
 vroom::vroom("data/paracou.tsv") %>% 
+  group_by(Genus, Species, idTree) %>% 
+  summarise(death = ifelse(any(CodeAlive == 0), 1, 0),
+            y_min = min(CensusYear),
+            y_max = max(CensusYear)) %>% 
   group_by(Genus, Species) %>% 
-  summarise(death = sum(CodeAlive == 0), trees = length(unique(idTree)), time = max(CensusYear) - min(CensusYear)) %>% 
-  transmute(mortality = death / trees / time * 100) %>% 
+  summarise(mortality = sum(death) / n() / (max(y_max) - min(y_min)) * 100) %>% 
   vroom::vroom_write("data/species_mortality.tsv")
 ```
 

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>References | tree species descriptors</title>
   <meta name="description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="References | tree species descriptors" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Sylvain Schmitt" />
 
 
-<meta name="date" content="2022-05-03" />
+<meta name="date" content="2023-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 <link rel="prev" href="performance-descriptors.html"/>
 
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,24 +49,24 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script async defer src="https://hypothes.is/embed.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -118,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="html/style.css" type="text/css" />
 </head>
@@ -136,11 +137,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
 <li class="chapter" data-level="0.1" data-path="introduction.html"><a href="introduction.html#species"><i class="fa fa-check"></i><b>0.1</b> Species</a></li>
 <li class="chapter" data-level="0.2" data-path="introduction.html"><a href="introduction.html#individuals"><i class="fa fa-check"></i><b>0.2</b> Individuals</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html"><i class="fa fa-check"></i><b>1</b> Environmental descriptors</a><ul>
+<li class="chapter" data-level="1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html"><i class="fa fa-check"></i><b>1</b> Environmental descriptors</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#twi-topographic-wetness-index"><i class="fa fa-check"></i><b>1.1</b> TWI: Topographic Wetness Index</a></li>
 <li class="chapter" data-level="1.2" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hand-height-above-nearest-drainage"><i class="fa fa-check"></i><b>1.2</b> HAND: Height Above Nearest Drainage</a></li>
 <li class="chapter" data-level="1.3" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hydromorphy"><i class="fa fa-check"></i><b>1.3</b> Hydromorphy</a></li>
@@ -150,7 +153,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#correlations"><i class="fa fa-check"></i><b>1.7</b> Correlations</a></li>
 <li class="chapter" data-level="1.8" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#species-data"><i class="fa fa-check"></i><b>1.8</b> Species data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="performance-descriptors.html"><a href="performance-descriptors.html"><i class="fa fa-check"></i><b>2</b> Performance descriptors</a><ul>
+<li class="chapter" data-level="2" data-path="performance-descriptors.html"><a href="performance-descriptors.html"><i class="fa fa-check"></i><b>2</b> Performance descriptors</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="performance-descriptors.html"><a href="performance-descriptors.html#growth"><i class="fa fa-check"></i><b>2.1</b> Growth</a></li>
 <li class="chapter" data-level="2.2" data-path="performance-descriptors.html"><a href="performance-descriptors.html#mortality"><i class="fa fa-check"></i><b>2.2</b> Mortality</a></li>
 </ul></li>
@@ -175,17 +179,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div class = rmdreview>
-This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
-</div>
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="references" class="section level1 unnumbered hasAnchor">
+<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
-<div id="refs" class="references">
-<div>
-<p>Hérault, B., Bachelot, B., Poorter, L., Rossi, V., Bongers, F., Chave, J., Paine, C.E.T., Wagner, F. &amp; Baraloto, C. (2011). Functional traits shape ontogenetic growth trajectories of rain forest tree species: Plant traits shape growth trajectory. <em>Journal of Ecology</em>, <strong>99</strong>, 1431–1440. Retrieved from <a href="http://doi.wiley.com/10.1111/j.1365-2745.2011.01883.x">http://doi.wiley.com/10.1111/j.1365-2745.2011.01883.x</a></p>
-</div>
-</div>
 </div>
             </section>
 
@@ -197,7 +193,6 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -216,6 +211,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -236,6 +232,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
