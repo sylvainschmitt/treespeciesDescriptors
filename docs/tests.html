@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Tests | tree species descriptors</title>
+  <meta name="description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Tests | tree species descriptors" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Tests | tree species descriptors" />
+  
+  <meta name="twitter:description" content="Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses." />
+  
+
+<meta name="author" content="Sylvain Schmitt" />
+
+
+<meta name="date" content="2023-04-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="performance-descriptors.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="html/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">treespeciesDescriptors</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="introduction.html"><a href="introduction.html#species"><i class="fa fa-check"></i><b>0.1</b> Species</a></li>
+<li class="chapter" data-level="0.2" data-path="introduction.html"><a href="introduction.html#individuals"><i class="fa fa-check"></i><b>0.2</b> Individuals</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html"><i class="fa fa-check"></i><b>1</b> Environmental descriptors</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#twi-topographic-wetness-index"><i class="fa fa-check"></i><b>1.1</b> TWI: Topographic Wetness Index</a></li>
+<li class="chapter" data-level="1.2" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hand-height-above-nearest-drainage"><i class="fa fa-check"></i><b>1.2</b> HAND: Height Above Nearest Drainage</a></li>
+<li class="chapter" data-level="1.3" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#hydromorphy"><i class="fa fa-check"></i><b>1.3</b> Hydromorphy</a></li>
+<li class="chapter" data-level="1.4" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#water-logging"><i class="fa fa-check"></i><b>1.4</b> Water logging</a></li>
+<li class="chapter" data-level="1.5" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#water-table-depth"><i class="fa fa-check"></i><b>1.5</b> Water table depth</a></li>
+<li class="chapter" data-level="1.6" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#drainage-type"><i class="fa fa-check"></i><b>1.6</b> Drainage type</a></li>
+<li class="chapter" data-level="1.7" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#correlations"><i class="fa fa-check"></i><b>1.7</b> Correlations</a></li>
+<li class="chapter" data-level="1.8" data-path="environmental-descriptors.html"><a href="environmental-descriptors.html#species-data"><i class="fa fa-check"></i><b>1.8</b> Species data</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="performance-descriptors.html"><a href="performance-descriptors.html"><i class="fa fa-check"></i><b>2</b> Performance descriptors</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="performance-descriptors.html"><a href="performance-descriptors.html#growth"><i class="fa fa-check"></i><b>2.1</b> Growth</a></li>
+<li class="chapter" data-level="2.2" data-path="performance-descriptors.html"><a href="performance-descriptors.html#mortality"><i class="fa fa-check"></i><b>2.2</b> Mortality</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tests.html"><a href="tests.html"><i class="fa fa-check"></i><b>3</b> Tests</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/sylvainschmitt/treespeciesDescriptors" target="blank">Source</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">tree species descriptors</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tests" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Tests<a href="tests.html#tests" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tests.html#cb18-1" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">vroom</span>(<span class="st">&quot;data/camille/Corrplot_canopy_strategy_traits_raw_19sp.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="tests.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Ptlp, P50leaf, P50stem, SSMleaf, SSMstem, SegP50,</span>
+<span id="cb18-3"><a href="tests.html#cb18-3" aria-hidden="true" tabindex="-1"></a>         gmin, gbark, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>, SegLSC_leaf, Pmd_18,</span>
+<span id="cb18-4"><a href="tests.html#cb18-4" aria-hidden="true" tabindex="-1"></a>         PLCleaf, PLCstem, Mortality) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="tests.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SegLSC =</span> SegLSC_leaf, <span class="at">Pmd =</span> Pmd_18)</span>
+<span id="cb18-6"><a href="tests.html#cb18-6" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;data/camille/DATABASE_Canopy.xlsx&quot;</span>, <span class="st">&quot;All_data_Ind&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="tests.html#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="st">&quot;Species...1&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Genus&quot;</span>, <span class="st">&quot;Species&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="tests.html#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(XUTM)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="tests.html#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSMleaf =</span> Ptlp_wet <span class="sc">-</span> P50leaf, </span>
+<span id="cb18-10"><a href="tests.html#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">SSMstem =</span> Ptlp_wet <span class="sc">-</span> P50stem) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-11"><a href="tests.html#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Genus, Species, Ptlp_wet, P50leaf, P50stem,  SSMleaf, SSMstem, SegP50,</span>
+<span id="cb18-12"><a href="tests.html#cb18-12" aria-hidden="true" tabindex="-1"></a>         gmin_leaf, gmin_bark, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>, SegLSC_leaf, Pmd_18,</span>
+<span id="cb18-13"><a href="tests.html#cb18-13" aria-hidden="true" tabindex="-1"></a>         PLCleaf_18, PLCstem_18, Mortality) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-14"><a href="tests.html#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Ptlp =</span> Ptlp_wet, <span class="at">gmin =</span> gmin_leaf, <span class="at">gbark =</span> gmin_bark,</span>
+<span id="cb18-15"><a href="tests.html#cb18-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">SegLSC =</span> SegLSC_leaf, <span class="at">Pmd =</span> Pmd_18, <span class="at">PLCleaf =</span> PLCleaf_18,</span>
+<span id="cb18-16"><a href="tests.html#cb18-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">PLCstem =</span> PLCstem_18)</span>
+<span id="cb18-17"><a href="tests.html#cb18-17" aria-hidden="true" tabindex="-1"></a>indxy <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;data/camille/DATABASE_Canopy.xlsx&quot;</span>, <span class="st">&quot;All_data_Ind&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-18"><a href="tests.html#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(XUTM)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-19"><a href="tests.html#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;XUTM&quot;</span>, <span class="st">&quot;YUTM&quot;</span>),</span>
+<span id="cb18-20"><a href="tests.html#cb18-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">crs =</span> <span class="st">&#39;+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0&#39;</span>)</span>
+<span id="cb18-21"><a href="tests.html#cb18-21" aria-hidden="true" tabindex="-1"></a>ind<span class="sc">$</span>HAND <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(raster<span class="sc">::</span><span class="fu">raster</span>(<span class="st">&quot;data/RelativeElevation_1m.tif&quot;</span>), indxy)</span>
+<span id="cb18-22"><a href="tests.html#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(indxy)</span>
+<span id="cb18-23"><a href="tests.html#cb18-23" aria-hidden="true" tabindex="-1"></a>agr <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;data/camille/DATABASE_Canopy.xlsx&quot;</span>, <span class="st">&quot;All_data_Ind&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-24"><a href="tests.html#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(XUTM)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-25"><a href="tests.html#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;Species...1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-26"><a href="tests.html#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="st">&quot;Species...1&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Genus&quot;</span>, <span class="st">&quot;Species&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-27"><a href="tests.html#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">vroom</span>(<span class="st">&quot;data/species_growth.tsv&quot;</span>))</span>
+<span id="cb18-28"><a href="tests.html#cb18-28" aria-hidden="true" tabindex="-1"></a>ind<span class="sc">$</span>AGR <span class="ot">&lt;-</span> agr<span class="sc">$</span>AGR</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="tests.html#cb19-1" aria-hidden="true" tabindex="-1"></a>ind <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="tests.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="tests.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="tests.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="tests.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb19-6"><a href="tests.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="tests.html#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Distribution raw&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/distributionsraw-1.png" width="768" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tests.html#cb20-1" aria-hidden="true" tabindex="-1"></a>ind <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="tests.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="tests.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="tests.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(<span class="fu">abs</span>(value)))) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="tests.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb20-6"><a href="tests.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="tests.html#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Distribution log and abs transformed&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/distributiontransformed-1.png" width="768" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="tests.html#cb21-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ind, <span class="fu">aes</span>(P50stem, P50leaf)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="tests.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="tests.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="tests.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-5"><a href="tests.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="tests.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="tests.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(P[<span class="dv">50</span><span class="sc">~</span>stem]<span class="sc">~</span>(MPa))) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="tests.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(P[<span class="dv">50</span><span class="sc">~</span>leaf]<span class="sc">~</span>(MPa)))</span>
+<span id="cb21-9"><a href="tests.html#cb21-9" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ind, <span class="fu">aes</span>(gbark, gmin)) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="tests.html#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="tests.html#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="tests.html#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-13"><a href="tests.html#cb21-13" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-14"><a href="tests.html#cb21-14" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="tests.html#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(g[min]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}))) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb21-16"><a href="tests.html#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(g[bark]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span>
+<span id="cb21-17"><a href="tests.html#cb21-17" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ind, <span class="fu">aes</span>(P50stem, gbark)) <span class="sc">+</span></span>
+<span id="cb21-18"><a href="tests.html#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-19"><a href="tests.html#cb21-19" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-20"><a href="tests.html#cb21-20" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb21-21"><a href="tests.html#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(P[<span class="dv">50</span><span class="sc">~</span>stem]<span class="sc">~</span>(MPa))) <span class="sc">+</span></span>
+<span id="cb21-22"><a href="tests.html#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(g[bark]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span>
+<span id="cb21-23"><a href="tests.html#cb21-23" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ind, <span class="fu">aes</span>(P50leaf, gmin)) <span class="sc">+</span></span>
+<span id="cb21-24"><a href="tests.html#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-25"><a href="tests.html#cb21-25" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-26"><a href="tests.html#cb21-26" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb21-27"><a href="tests.html#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(g[min]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}))) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb21-28"><a href="tests.html#cb21-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(P[<span class="dv">50</span><span class="sc">~</span>leaf]<span class="sc">~</span>(MPa)))</span>
+<span id="cb21-29"><a href="tests.html#cb21-29" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">+</span> g2) <span class="sc">/</span> (g3 <span class="sc">+</span> g4)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig1-1.png" width="576" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="tests.html#cb22-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="tests.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SSMleaf, SSMstem, SegP50) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="tests.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>SegP50) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="tests.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="tests.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(SegP50, value, <span class="at">col =</span> variable)) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="tests.html#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="tests.html#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-8"><a href="tests.html#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="tests.html#cb22-9" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="tests.html#cb22-10" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="tests.html#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(Seg[P50]<span class="sc">~</span>(MPa))) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="tests.html#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(SSM[leaf]<span class="sc">~</span>or<span class="sc">~</span>SSM[stem]<span class="sc">~</span>(MPa)))</span>
+<span id="cb22-13"><a href="tests.html#cb22-13" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ind, <span class="fu">aes</span>(SegLSC, gmin)) <span class="sc">+</span></span>
+<span id="cb22-14"><a href="tests.html#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-15"><a href="tests.html#cb22-15" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb22-16"><a href="tests.html#cb22-16" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb22-17"><a href="tests.html#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(g[min]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}))) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="tests.html#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(Seg[LSC]<span class="sc">~</span>(<span class="dv">10</span><span class="sc">^</span>{<span class="dv">5</span>}<span class="sc">~</span>kg<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}<span class="sc">~</span>Mpa<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span>
+<span id="cb22-19"><a href="tests.html#cb22-19" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb22-20"><a href="tests.html#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gmin, gbark, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-21"><a href="tests.html#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span><span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-22"><a href="tests.html#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-23"><a href="tests.html#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>, <span class="at">col =</span> variable)) <span class="sc">+</span></span>
+<span id="cb22-24"><a href="tests.html#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-25"><a href="tests.html#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-26"><a href="tests.html#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb22-27"><a href="tests.html#cb22-27" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb22-28"><a href="tests.html#cb22-28" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb22-29"><a href="tests.html#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Al:As&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-30"><a href="tests.html#cb22-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(g[min]<span class="sc">~</span>or<span class="sc">~</span>g[bark]<span class="sc">~</span>(mmol<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>s<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span>
+<span id="cb22-31"><a href="tests.html#cb22-31" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb22-32"><a href="tests.html#cb22-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(P50leaf, P50stem, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-33"><a href="tests.html#cb22-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span><span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-34"><a href="tests.html#cb22-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-35"><a href="tests.html#cb22-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="st">`</span><span class="at">Al:As</span><span class="st">`</span>, <span class="at">col =</span> variable)) <span class="sc">+</span></span>
+<span id="cb22-36"><a href="tests.html#cb22-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-37"><a href="tests.html#cb22-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb22-38"><a href="tests.html#cb22-38" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb22-39"><a href="tests.html#cb22-39" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..))) <span class="sc">+</span></span>
+<span id="cb22-40"><a href="tests.html#cb22-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Al:As&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-41"><a href="tests.html#cb22-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(P[<span class="dv">50</span><span class="sc">~</span>leaf]<span class="sc">~</span>or<span class="sc">~</span>P[<span class="dv">50</span><span class="sc">~</span>stem]<span class="sc">~</span>(MPa)))</span>
+<span id="cb22-42"><a href="tests.html#cb22-42" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">+</span> g2) <span class="sc">/</span> (g3 <span class="sc">+</span> g4)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tests.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nls</span>(PLCstem <span class="sc">~</span> <span class="fu">SSasymp</span>(<span class="fu">abs</span>(P50stem), Asym, R0, lrc), ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="tests.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+PL Cstem
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Asym
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.66
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-4.90 – 6.23
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.813
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+R0
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+216.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-85.63 – 518.75
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.158
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+lrc
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.61 – 0.77
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.821
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+86
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.345
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="tests.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">log</span>(PLCstem) <span class="sc">~</span> P50stem, ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="tests.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+log(PL Cstem)
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+7.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.28 – 11.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+P50stem
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.61
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.66 – 3.55
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+86
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.262 / 0.254
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tests.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nls</span>(PLCstem <span class="sc">~</span> <span class="fu">SSasymp</span>(SegP50, Asym, R0, lrc), ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="tests.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+PL Cstem
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Asym
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-9.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-39.02 – 19.89
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.517
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+R0
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+11.85
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+6.55 – 17.16
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+lrc
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-1.19
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-2.50 – 0.13
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.076
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+49
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.308
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tests.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">log</span>(PLCstem) <span class="sc">~</span> SegP50, ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="tests.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+log(PL Cstem)
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-1.68
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-4.47 – 1.11
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.231
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+SegP50
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-2.84
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-4.49 – -1.19
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+49
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.204 / 0.187
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tests.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nls</span>(PLCstem <span class="sc">~</span> <span class="fu">SSasymp</span>(SSMstem, Asym, R0, lrc), ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="tests.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+PL Cstem
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Asym
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-2.38 – 4.94
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.488
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+R0
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+29.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+23.29 – 34.75
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+lrc
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.26
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.06 – 0.58
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.112
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+73
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.603
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tests.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">log</span>(PLCstem) <span class="sc">~</span> SSMstem, ind) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="tests.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">tab_model</span>()</span></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+log(PL Cstem)
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.51
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.45 – 5.48
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.095
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+SSMstem
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-2.68
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-3.81 – -1.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+73
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.242 / 0.231
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tests.html#cb29-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="tests.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(PLCstem, P50stem, SegP50, SSMstem) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="tests.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>PLCstem) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="tests.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-5"><a href="tests.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable_long =</span> <span class="fu">recode</span>(variable,</span>
+<span id="cb29-6"><a href="tests.html#cb29-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;P50stem&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~stem]~(MPa)&quot;</span>,</span>
+<span id="cb29-7"><a href="tests.html#cb29-7" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;SegP50&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[P50]~(MPa)&quot;</span>,</span>
+<span id="cb29-8"><a href="tests.html#cb29-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;SSMstem&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[stem]~(MPa)&quot;</span></span>
+<span id="cb29-9"><a href="tests.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb29-10"><a href="tests.html#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(value, PLCstem)) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="tests.html#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-12"><a href="tests.html#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable_long, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">labeller =</span> label_parsed) <span class="sc">+</span></span>
+<span id="cb29-13"><a href="tests.html#cb29-13" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb29-14"><a href="tests.html#cb29-14" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..)), </span>
+<span id="cb29-15"><a href="tests.html#cb29-15" aria-hidden="true" tabindex="-1"></a>                                <span class="at">label.y.npc =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb29-16"><a href="tests.html#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-17"><a href="tests.html#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig4-1.png" width="576" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tests.html#cb30-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="tests.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>PLCleaf, <span class="sc">-</span>PLCstem, <span class="sc">-</span>Pmd, <span class="sc">-</span>Mortality, <span class="sc">-</span>AGR, <span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="tests.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>HAND) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="tests.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5"><a href="tests.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable_long =</span> <span class="fu">recode</span>(variable,</span>
+<span id="cb30-6"><a href="tests.html#cb30-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;Ptlp&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[tlp]~(MPa)&quot;</span>,</span>
+<span id="cb30-7"><a href="tests.html#cb30-7" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50leaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~leaf]~(MPa)&quot;</span>,</span>
+<span id="cb30-8"><a href="tests.html#cb30-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50stem&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~stem]~(MPa)&quot;</span>,</span>
+<span id="cb30-9"><a href="tests.html#cb30-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegP50&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[P50]~(MPa)&quot;</span>,</span>
+<span id="cb30-10"><a href="tests.html#cb30-10" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMleaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[leaf]~(MPa)&quot;</span>,</span>
+<span id="cb30-11"><a href="tests.html#cb30-11" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMstem&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[stem]~(MPa)&quot;</span>,</span>
+<span id="cb30-12"><a href="tests.html#cb30-12" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegLSC&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})&quot;</span>,</span>
+<span id="cb30-13"><a href="tests.html#cb30-13" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gmin&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[min]~(mmol~m^{-2}~s^{-1})&quot;</span>,</span>
+<span id="cb30-14"><a href="tests.html#cb30-14" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gbark&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[bark]~(mmol~m^{-2}~s^{-1})&quot;</span></span>
+<span id="cb30-15"><a href="tests.html#cb30-15" aria-hidden="true" tabindex="-1"></a>                           ))</span>
+<span id="cb30-16"><a href="tests.html#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(HAND, <span class="fu">abs</span>(value))) <span class="sc">+</span></span>
+<span id="cb30-17"><a href="tests.html#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-18"><a href="tests.html#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable_long, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">labeller =</span> label_parsed) <span class="sc">+</span></span>
+<span id="cb30-19"><a href="tests.html#cb30-19" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), <span class="at">label.y.npc =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb30-20"><a href="tests.html#cb30-20" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..)),</span>
+<span id="cb30-21"><a href="tests.html#cb30-21" aria-hidden="true" tabindex="-1"></a>                                <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">label.y.npc =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb30-22"><a href="tests.html#cb30-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb30-23"><a href="tests.html#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;HAND (m)&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig5-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tests.html#cb31-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="tests.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>PLCleaf, <span class="sc">-</span>PLCstem, <span class="sc">-</span>Pmd, <span class="sc">-</span>HAND, <span class="sc">-</span>AGR, <span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="tests.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>Mortality) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="tests.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5"><a href="tests.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable_long =</span> <span class="fu">recode</span>(variable,</span>
+<span id="cb31-6"><a href="tests.html#cb31-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;Ptlp&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[tlp]~(MPa)&quot;</span>,</span>
+<span id="cb31-7"><a href="tests.html#cb31-7" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50leaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~leaf]~(MPa)&quot;</span>,</span>
+<span id="cb31-8"><a href="tests.html#cb31-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50stem&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~stem]~(MPa)&quot;</span>,</span>
+<span id="cb31-9"><a href="tests.html#cb31-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegP50&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[P50]~(MPa)&quot;</span>,</span>
+<span id="cb31-10"><a href="tests.html#cb31-10" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMleaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[leaf]~(MPa)&quot;</span>,</span>
+<span id="cb31-11"><a href="tests.html#cb31-11" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMstem&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[stem]~(MPa)&quot;</span>,</span>
+<span id="cb31-12"><a href="tests.html#cb31-12" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegLSC&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})&quot;</span>,</span>
+<span id="cb31-13"><a href="tests.html#cb31-13" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gmin&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[min]~(mmol~m^{-2}~s^{-1})&quot;</span>,</span>
+<span id="cb31-14"><a href="tests.html#cb31-14" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gbark&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[bark]~(mmol~m^{-2}~s^{-1})&quot;</span></span>
+<span id="cb31-15"><a href="tests.html#cb31-15" aria-hidden="true" tabindex="-1"></a>                           ))</span>
+<span id="cb31-16"><a href="tests.html#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="fu">abs</span>(value), Mortality)) <span class="sc">+</span></span>
+<span id="cb31-17"><a href="tests.html#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb31-18"><a href="tests.html#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable_long, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">labeller =</span> label_parsed) <span class="sc">+</span></span>
+<span id="cb31-19"><a href="tests.html#cb31-19" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)), </span>
+<span id="cb31-20"><a href="tests.html#cb31-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">label.y.npc =</span> <span class="fl">0.75</span>, <span class="at">label.x.npc =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb31-21"><a href="tests.html#cb31-21" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..)),</span>
+<span id="cb31-22"><a href="tests.html#cb31-22" aria-hidden="true" tabindex="-1"></a>                                <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x),</span>
+<span id="cb31-23"><a href="tests.html#cb31-23" aria-hidden="true" tabindex="-1"></a>                                <span class="at">label.y.npc =</span> <span class="fl">0.95</span>, <span class="at">label.x.npc =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb31-24"><a href="tests.html#cb31-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x),</span>
+<span id="cb31-25"><a href="tests.html#cb31-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> <span class="fu">filter</span>(data, variable <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;gmin&quot;</span>,  <span class="st">&quot;gbark&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb31-26"><a href="tests.html#cb31-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(Mortality<span class="sc">~</span>(<span class="st">&quot;%&quot;</span><span class="sc">~</span>year<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}))) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig6-1.png" width="960" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tests.html#cb32-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> ind <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="tests.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>PLCleaf, <span class="sc">-</span>PLCstem, <span class="sc">-</span>Pmd, <span class="sc">-</span>HAND, <span class="sc">-</span>Mortality, <span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="tests.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(variable, value, <span class="sc">-</span>AGR) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="tests.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href="tests.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable_long =</span> <span class="fu">recode</span>(variable,</span>
+<span id="cb32-6"><a href="tests.html#cb32-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;Ptlp&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[tlp]~(MPa)&quot;</span>,</span>
+<span id="cb32-7"><a href="tests.html#cb32-7" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50leaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~leaf]~(MPa)&quot;</span>,</span>
+<span id="cb32-8"><a href="tests.html#cb32-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;P50stem&quot;</span> <span class="ot">=</span> <span class="st">&quot;P[50~stem]~(MPa)&quot;</span>,</span>
+<span id="cb32-9"><a href="tests.html#cb32-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegP50&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[P50]~(MPa)&quot;</span>,</span>
+<span id="cb32-10"><a href="tests.html#cb32-10" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMleaf&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[leaf]~(MPa)&quot;</span>,</span>
+<span id="cb32-11"><a href="tests.html#cb32-11" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SSMstem&quot;</span> <span class="ot">=</span> <span class="st">&quot;SSM[stem]~(MPa)&quot;</span>,</span>
+<span id="cb32-12"><a href="tests.html#cb32-12" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;SegLSC&quot;</span> <span class="ot">=</span> <span class="st">&quot;Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})&quot;</span>,</span>
+<span id="cb32-13"><a href="tests.html#cb32-13" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gmin&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[min]~(mmol~m^{-2}~s^{-1})&quot;</span>,</span>
+<span id="cb32-14"><a href="tests.html#cb32-14" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;gbark&quot;</span> <span class="ot">=</span> <span class="st">&quot;g[bark]~(mmol~m^{-2}~s^{-1})&quot;</span></span>
+<span id="cb32-15"><a href="tests.html#cb32-15" aria-hidden="true" tabindex="-1"></a>                           ))</span>
+<span id="cb32-16"><a href="tests.html#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="fu">abs</span>(value), AGR)) <span class="sc">+</span></span>
+<span id="cb32-17"><a href="tests.html#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb32-18"><a href="tests.html#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable_long, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">labeller =</span> label_parsed) <span class="sc">+</span></span>
+<span id="cb32-19"><a href="tests.html#cb32-19" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..p.label..)),</span>
+<span id="cb32-20"><a href="tests.html#cb32-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">label.y.npc =</span> <span class="fl">0.75</span>, <span class="at">label.x.npc =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb32-21"><a href="tests.html#cb32-21" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_regline_equation</span>(<span class="fu">aes</span>(<span class="at">label =</span>  <span class="fu">paste</span>(..adj.rr.label..)),</span>
+<span id="cb32-22"><a href="tests.html#cb32-22" aria-hidden="true" tabindex="-1"></a>                                <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x),</span>
+<span id="cb32-23"><a href="tests.html#cb32-23" aria-hidden="true" tabindex="-1"></a>                                <span class="at">label.y.npc =</span> <span class="fl">0.95</span>, <span class="at">label.x.npc =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb32-24"><a href="tests.html#cb32-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb32-25"><a href="tests.html#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(Annual<span class="sc">~</span>growth<span class="sc">~</span>rate<span class="sc">~</span>(<span class="st">&quot;cm&quot;</span><span class="sc">~</span>year<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>}))) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/fig7-1.png" width="960" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tests.html#cb33-1" aria-hidden="true" tabindex="-1"></a>ind <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="tests.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Genus, <span class="sc">-</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="tests.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="tests.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  corrplot<span class="sc">::</span><span class="fu">corrplot</span>(<span class="at">type =</span> <span class="st">&quot;upper&quot;</span>,</span>
+<span id="cb33-5"><a href="tests.html#cb33-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;ellipse&quot;</span>,</span>
+<span id="cb33-6"><a href="tests.html#cb33-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">col =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>,<span class="st">&quot;red&quot;</span>))(<span class="dv">100</span>))</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/figs2-1.png" width="768" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tests.html#cb34-1" aria-hidden="true" tabindex="-1"></a>ind <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="tests.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Genus, Species, HAND) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="tests.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="tests.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Hmed =</span> <span class="fu">median</span>(HAND)) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-5"><a href="tests.html#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Hmed) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-6"><a href="tests.html#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;Terra firme&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-7"><a href="tests.html#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">ifelse</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;bidentata&quot;</span>, <span class="st">&quot;rosea&quot;</span>, <span class="st">&quot;globulifera&quot;</span>, <span class="st">&quot;melinonii&quot;</span>), </span>
+<span id="cb34-8"><a href="tests.html#cb34-8" aria-hidden="true" tabindex="-1"></a>                       <span class="st">&quot;Generalist&quot;</span>, type)) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-9"><a href="tests.html#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">ifelse</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;falcata&quot;</span>, <span class="st">&quot;glabra&quot;</span>, <span class="st">&quot;hexapetala&quot;</span>, <span class="st">&quot;persistens&quot;</span>,</span>
+<span id="cb34-10"><a href="tests.html#cb34-10" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;opacum&quot;</span>),</span>
+<span id="cb34-11"><a href="tests.html#cb34-11" aria-hidden="true" tabindex="-1"></a>                       <span class="st">&quot;Bottomland&quot;</span>, type)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-12"><a href="tests.html#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">reorder</span>(<span class="fu">paste</span>(Genus, Species), Hmed), HAND, <span class="at">col =</span> type)) <span class="sc">+</span></span>
+<span id="cb34-13"><a href="tests.html#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb34-14"><a href="tests.html#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb34-15"><a href="tests.html#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;HAND (m)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-16"><a href="tests.html#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;italic&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb34-17"><a href="tests.html#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;firebrick&quot;</span>))</span></code></pre></div>
+<p><img src="treespeciesDescriptors_files/figure-html/figs4-1.png" width="768" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="performance-descriptors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
