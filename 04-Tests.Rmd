@@ -11,15 +11,11 @@ opts_chunk$set(
   cache = T, cache.lazy = F, eval=T)
 ```
 
-
 # Tests
 
+## Data
+
 ```{r data}
-sp <- vroom("data/camille/Corrplot_canopy_strategy_traits_raw_19sp.csv") %>% 
-  select(Ptlp, P50leaf, P50stem, SSMleaf, SSMstem, SegP50,
-         gmin, gbark, `Al:As`, SegLSC_leaf, Pmd_18,
-         PLCleaf, PLCstem, Mortality) %>% 
-  rename(SegLSC = SegLSC_leaf, Pmd = Pmd_18)
 ind <- readxl::read_excel("data/camille/DATABASE_Canopy.xlsx", "All_data_Ind") %>% 
   separate("Species...1", c("Genus", "Species")) %>% 
   filter(!is.na(XUTM)) %>% 
@@ -45,6 +41,7 @@ agr <- readxl::read_excel("data/camille/DATABASE_Canopy.xlsx", "All_data_Ind") %
 ind$AGR <- agr$AGR
 ```
 
+## Normality
 
 ```{r distributionsraw}
 ind %>% 
@@ -66,37 +63,55 @@ ind %>%
   ggtitle("Distribution log and abs transformed")
 ```
 
+## Figure 1
+
+```{r}
+m1 <- lm(P50stem ~ P50leaf, ind)
+m2 <- lm(gbark ~ gmin, ind)
+m3 <- lm(gbark ~ P50stem, ind)
+m4 <- lm(gmin ~ P50leaf, ind)
+```
+
+```{r}
+sjPlot::tab_model(m1)
+sjPlot::tab_model(m2)
+sjPlot::tab_model(m3)
+sjPlot::tab_model(m4)
+```
+
+
 ```{r fig1, fig.height=6, fig.width=6}
 g1 <- ggplot(ind, aes(P50stem, P50leaf)) +
-  geom_smooth(method = "lm") +
+  geom_smooth(method = "lm", formula = y ~ x, col = "red") +
   geom_abline(linetype = "dashed") +
   geom_point() +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.8) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..))) +
   xlab(expression(P[50~stem]~(MPa))) +
-  ylab(expression(P[50~leaf]~(MPa)))
+  ylab(expression(P[50~leaf]~(MPa))) +
+  ggtitle(paste0("R²=", round(broom::glance(m1)$r.squared, 3),
+          ", p=", round(broom::glance(m1)$p.value, 3)))
 g2 <- ggplot(ind, aes(gbark, gmin)) +
-  geom_smooth(method = "lm") +
   geom_abline(linetype = "dashed") +
   geom_point() +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.8) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..))) +
   ylab(expression(g[min]~(mmol~m^{-2}~s^{-1}))) + ylim(0, 10) +
-  xlab(expression(g[bark]~(mmol~m^{-2}~s^{-1})))
+  xlab(expression(g[bark]~(mmol~m^{-2}~s^{-1}))) +
+  ggtitle(paste0("R²=", round(broom::glance(m2)$r.squared, 3),
+          ", p=", round(broom::glance(m2)$p.value, 3)))
 g3 <- ggplot(ind, aes(P50stem, gbark)) +
   geom_point() +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.8) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..))) +
   xlab(expression(P[50~stem]~(MPa))) +
-  ylab(expression(g[bark]~(mmol~m^{-2}~s^{-1})))
+  ylab(expression(g[bark]~(mmol~m^{-2}~s^{-1}))) +
+  ggtitle(paste0("R²=", round(broom::glance(m3)$r.squared, 3),
+          ", p=", round(broom::glance(m3)$p.value, 3)))
 g4 <- ggplot(ind, aes(P50leaf, gmin)) +
   geom_point() +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.8) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..))) +
   ylab(expression(g[min]~(mmol~m^{-2}~s^{-1}))) + ylim(0, 10) +
-  xlab(expression(P[50~leaf]~(MPa)))
+  xlab(expression(P[50~leaf]~(MPa))) +
+  ggtitle(paste0("R²=", round(broom::glance(m4)$r.squared, 3),
+          ", p=", round(broom::glance(m4)$p.value, 3)))
 (g1 + g2) / (g3 + g4)
 ```
+
+## Figure 2
 
 ```{r fig2, fig.height=7, fig.width=7}
 g1 <- ind %>% 
@@ -143,123 +158,154 @@ g4 <- ind %>%
 (g1 + g2) / (g3 + g4)
 ```
 
+## Figure 3
+
 ```{r}
-nls(PLCstem ~ SSasymp(abs(P50stem), Asym, R0, lrc), ind) %>% 
-  sjPlot::tab_model()
-lm(log(PLCstem) ~ P50stem, ind) %>% 
-  sjPlot::tab_model()
-nls(PLCstem ~ SSasymp(SegP50, Asym, R0, lrc), ind) %>% 
-  sjPlot::tab_model()
-lm(log(PLCstem) ~ SegP50, ind) %>% 
-  sjPlot::tab_model()
-nls(PLCstem ~ SSasymp(SSMstem, Asym, R0, lrc), ind) %>% 
-  sjPlot::tab_model()
-lm(log(PLCstem) ~ SSMstem, ind) %>% 
-  sjPlot::tab_model()
+data <- select(ind, PLCstem, P50stem, 
+               SSMstem, SegP50) %>% 
+  na.omit()
+m0 <- lm(log(PLCstem) ~ P50stem, data)
+m1 <- lm(log(PLCstem) ~ SSMstem, data)
+m2 <- lm(log(PLCstem) ~ SegP50, data)
+anova(m0, m1, m2)
 ```
 
-```{r fig4, fig.height=3, fig.width=6}
-data <- ind %>%
-  select(PLCstem, P50stem, SegP50, SSMstem) %>%
-  gather(variable, value, -PLCstem) %>%
-  na.omit() %>%
-  mutate(variable_long = recode(variable,
-                                "P50stem" = "P[50~stem]~(MPa)",
-                                "SegP50" = "Seg[P50]~(MPa)",
-                                "SSMstem" = "SSM[stem]~(MPa)"
-  ))
-ggplot(data, aes(value, PLCstem)) +
-  geom_point() +
-  facet_wrap(~ variable_long, scales = "free", labeller = label_parsed) +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.1) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..)), 
-                                label.y.npc = 0.2) +
-  scale_y_log10() + xlab("") +
-  geom_smooth(method = "lm")
-```
+## Figure 5
 
-```{r fig5, fig.height=6, fig.width=10}
+```{r}
 data <- ind %>% 
-  select(-PLCleaf, -PLCstem, -Pmd, -Mortality, -AGR, -Genus, -Species) %>% 
+  rename(AlAs = `Al:As`) %>% 
+  select(HAND, Ptlp, P50leaf, P50stem, gmin, gbark, AlAs) %>% 
+  na.omit()
+lm(HAND ~ Ptlp + P50leaf + P50stem + log(gmin) + log(gbark) + log(AlAs), data) %>% 
+  step(trace = F) %>% 
+  sjPlot::tab_model()
+```
+
+```{r fig5}
+datag <- data %>% 
+  mutate(gmin = log(gmin), gbark = log(gbark), AlAs = log(AlAs)) %>% 
   gather(variable, value, -HAND) %>% 
   na.omit() %>% 
   mutate(variable_long = recode(variable,
-                           "Ptlp" = "P[tlp]~(MPa)",
-                           "P50leaf" = "P[50~leaf]~(MPa)",
-                           "P50stem" = "P[50~stem]~(MPa)",
-                           "SegP50" = "Seg[P50]~(MPa)",
-                           "SSMleaf" = "SSM[leaf]~(MPa)",
-                           "SSMstem" = "SSM[stem]~(MPa)",
-                           "SegLSC" = "Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})",
-                           "gmin" = "g[min]~(mmol~m^{-2}~s^{-1})",
-                           "gbark" = "g[bark]~(mmol~m^{-2}~s^{-1})"
-                           ))
-ggplot(data, aes(HAND, abs(value))) +
+                                "AlAs" = "log(Al:As)",
+                                "Ptlp" = "P[tlp]~(MPa)",
+                                "P50leaf" = "P[50~leaf]~(MPa)",
+                                "P50stem" = "P[50~stem]~(MPa)",
+                                "gmin" = "log(g[min])~(mmol~m^{-2}~s^{-1})",
+                                "gbark" = "log(g[bark])~(mmol~m^{-2}~s^{-1})"
+  ))
+ggplot(datag, aes(HAND, value)) +
   geom_point() +
   facet_wrap(~ variable_long, scales = "free", labeller = label_parsed) +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), label.y.npc = 0.1) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..)),
-                                formula = y ~ log(x), label.y.npc = 0.3) +
-  scale_y_log10() +
   ylab("") + xlab("HAND (m)")
 ```
 
-```{r fig6, fig.height=6, fig.width=10}
+## Figure 6
+
+```{r}
 data <- ind %>% 
-  select(-PLCleaf, -PLCstem, -Pmd, -HAND, -AGR, -Genus, -Species) %>% 
+  rename(AlAs = `Al:As`) %>% 
+  select(Mortality, Ptlp, P50leaf, P50stem, gmin, gbark, AlAs) %>% 
+  na.omit()
+lm(Mortality ~ Ptlp + P50leaf + P50stem + log(gmin) + log(gbark) + log(AlAs), data) %>% 
+  step(trace = F) %>% 
+  sjPlot::tab_model()
+```
+
+```{r fig6}
+datag <- data %>% 
+  mutate(gmin = log(gmin), gbark = log(gbark), AlAs = log(AlAs)) %>% 
   gather(variable, value, -Mortality) %>% 
   na.omit() %>% 
   mutate(variable_long = recode(variable,
-                           "Ptlp" = "P[tlp]~(MPa)",
-                           "P50leaf" = "P[50~leaf]~(MPa)",
-                           "P50stem" = "P[50~stem]~(MPa)",
-                           "SegP50" = "Seg[P50]~(MPa)",
-                           "SSMleaf" = "SSM[leaf]~(MPa)",
-                           "SSMstem" = "SSM[stem]~(MPa)",
-                           "SegLSC" = "Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})",
-                           "gmin" = "g[min]~(mmol~m^{-2}~s^{-1})",
-                           "gbark" = "g[bark]~(mmol~m^{-2}~s^{-1})"
-                           ))
-ggplot(data, aes(abs(value), Mortality)) +
+                                "AlAs" = "log(Al:As)",
+                                "Ptlp" = "P[tlp]~(MPa)",
+                                "P50leaf" = "P[50~leaf]~(MPa)",
+                                "P50stem" = "P[50~stem]~(MPa)",
+                                "gmin" = "log(g[min])~(mmol~m^{-2}~s^{-1})",
+                                "gbark" = "log(g[bark])~(mmol~m^{-2}~s^{-1})"
+  ))
+ggplot(datag, aes(value, Mortality)) +
   geom_point() +
   facet_wrap(~ variable_long, scales = "free", labeller = label_parsed) +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)), 
-                   label.y.npc = 0.75, label.x.npc = 0.5) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..)),
-                                formula = y ~ log(x),
-                                label.y.npc = 0.95, label.x.npc = 0.5) +
-  geom_smooth(method = "lm", formula = y ~ log(x),
-              data = filter(data, variable %in% c("gmin",  "gbark"))) +
-  ylab(expression(Mortality~("%"~year^{-1}))) + xlab("")
+  ylab(expression(Mortality~("%"~year^{-1}))) + xlab("") +
+   geom_smooth(method = "lm", data = filter(datag, variable %in% c("gbark")))
 ```
 
-```{r fig7, fig.height=6, fig.width=10}
+```{r}
+m1 <- lm(Mortality ~ log(gbark), ind)
+sjPlot::tab_model(m1)
+```
+
+```{r}
+ggplot(data, aes(Mortality, gbark)) +
+  geom_smooth(method = "lm", formula = y ~ log(x), col = "red") +
+  geom_point() +
+  ylab(expression(Mortality~("%"~year^{-1}))) +
+  xlab(expression(g[bark]~(mmol~m^{-2}~s^{-1}))) +
+  ggtitle(paste0("R²=", round(broom::glance(m1)$r.squared, 3),
+          ", p=", round(broom::glance(m1)$p.value, 3)))
+```
+
+
+## Figure 7
+
+```{r}
 data <- ind %>% 
-  select(-PLCleaf, -PLCstem, -Pmd, -HAND, -Mortality, -Genus, -Species) %>% 
+  rename(AlAs = `Al:As`) %>% 
+  select(AGR, Ptlp, P50leaf, P50stem, gmin, gbark, AlAs) %>% 
+  na.omit()
+lm(log(AGR) ~ Ptlp + P50leaf + P50stem + log(gmin) + log(gbark) + log(AlAs), data) %>% 
+  step(trace = F) %>% 
+  sjPlot::tab_model()
+```
+
+```{r fig7}
+datag <- data %>% 
+  mutate(gmin = log(gmin), gbark = log(gbark), AlAs = log(AlAs)) %>% 
   gather(variable, value, -AGR) %>% 
   na.omit() %>% 
   mutate(variable_long = recode(variable,
-                           "Ptlp" = "P[tlp]~(MPa)",
-                           "P50leaf" = "P[50~leaf]~(MPa)",
-                           "P50stem" = "P[50~stem]~(MPa)",
-                           "SegP50" = "Seg[P50]~(MPa)",
-                           "SSMleaf" = "SSM[leaf]~(MPa)",
-                           "SSMstem" = "SSM[stem]~(MPa)",
-                           "SegLSC" = "Seg[LSC]~(10^{5}~kg~m^{-1}~Mpa^{-1}~s^{-1})",
-                           "gmin" = "g[min]~(mmol~m^{-2}~s^{-1})",
-                           "gbark" = "g[bark]~(mmol~m^{-2}~s^{-1})"
-                           ))
-ggplot(data, aes(abs(value), AGR)) +
+                                "AlAs" = "log(Al:As)",
+                                "Ptlp" = "P[tlp]~(MPa)",
+                                "P50leaf" = "P[50~leaf]~(MPa)",
+                                "P50stem" = "P[50~stem]~(MPa)",
+                                "gmin" = "log(g[min])~(mmol~m^{-2}~s^{-1})",
+                                "gbark" = "log(g[bark])~(mmol~m^{-2}~s^{-1})"
+  ))
+ggplot(datag, aes(value, AGR)) +
   geom_point() +
   facet_wrap(~ variable_long, scales = "free", labeller = label_parsed) +
-  ggpubr::stat_cor(aes(label =  paste(..p.label..)),
-                   label.y.npc = 0.75, label.x.npc = 0.5) +
-  ggpubr::stat_regline_equation(aes(label =  paste(..adj.rr.label..)),
-                                formula = y ~ log(x),
-                                label.y.npc = 0.95, label.x.npc = 0.5) +
+  ylab(expression(Annual~growth~rate~("cm"~year^{-1}))) + xlab("") +
   scale_y_log10() +
-  ylab(expression(Annual~growth~rate~("cm"~year^{-1}))) + xlab("")
+  geom_smooth(method = "lm", data = filter(datag, variable %in% c("gbark", "gmin", "P50stem")))
 ```
+
+```{r}
+datag2 <- select(data, gbark, gmin, P50stem, AGR) %>% 
+  gather(variable, value, -AGR) %>% 
+  na.omit() %>% 
+  mutate(variable_long = recode(variable,
+                                "P50stem" = "P[50~stem]~(MPa)~~p==0.043",
+                                "gmin" = "log(g[min])~(mmol~m^{-2}~s^{-1})~~p==0.006",
+                                "gbark" = "log(g[bark])~(mmol~m^{-2}~s^{-1})~~p==0.003"
+  ))
+
+ggplot(datag2, aes(value, AGR)) +
+  geom_point() +
+  scale_y_log10() +
+  ylab(expression(Annual~growth~rate~("cm"~year^{-1}))) + xlab("") +
+  ggtitle("log(AGR) ~ P50 + log(gmin) + log(gbark)", "N=22, R²=0.467") +
+  facet_wrap(~ variable_long, scales = "free", labeller = label_parsed) +
+  geom_smooth(method = "lm", formula = y ~ log(x), col = "red",
+              data = filter(datag2, variable %in% c("gmin", "gbark"))) +
+  geom_smooth(method = "lm", formula = y ~ x, col = "red",
+              data = filter(datag2, variable %in% c("P50stem")))
+```
+
+
+## Figure S2
 
 ```{r figs2}
 ind %>% 
@@ -269,6 +315,8 @@ ind %>%
                      method = "ellipse",
                      col = colorRampPalette(c("blue", "white","red"))(100))
 ```
+
+## Figure S4
 
 ```{r figs4}
 ind %>% 

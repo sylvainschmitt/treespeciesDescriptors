@@ -18,3 +18,13 @@ performance-descriptors
 growth
 mortality
 tests
+data
+normality
+figure-1
+figure-2
+figure-3
+figure-5
+figure-6
+figure-7
+figure-s2
+figure-s4
