@@ -18,6 +18,8 @@ performance-descriptors
 growth
 mortality
 tests
+figure-with-error
+old
 data
 normality
 figure-1

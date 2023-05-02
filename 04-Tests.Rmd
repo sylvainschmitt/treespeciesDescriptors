@@ -13,9 +13,85 @@ opts_chunk$set(
 
 # Tests
 
-## Data
+## Figure with error
+
+```{r library}
+library(tidyverse)
+library(readxl)
+```
+
 
 ```{r data}
+data <- read_excel("data/camille/DATABASE_Canopy.xlsx", "All_data_Ind") %>% 
+  separate("Species...1", c("Genus", "Species")) %>% 
+  mutate(SSMleaf = Ptlp_wet - P50leaf, 
+         SSMstem = Ptlp_wet - P50stem) %>% 
+  select(Genus, Species, Ptlp_wet, P50leaf, P50stem,  SSMleaf, SSMstem, SegP50,
+         gmin_leaf, gmin_bark, `Al:As`, SegLSC_leaf, Pmd_18,
+         PLCleaf_18, PLCstem_18, Mortality) %>% 
+  rename(Ptlp = Ptlp_wet, gmin = gmin_leaf, gbark = gmin_bark,
+         SegLSC = SegLSC_leaf, Pmd = Pmd_18, PLCleaf = PLCleaf_18,
+         PLCstem = PLCstem_18, AlAs = `Al:As`) %>% 
+  gather(variable, value, -Genus, -Species) %>% 
+  group_by(Genus, Species, variable) %>% 
+  summarise(median = median(value, na.rm = T), sd  = sd(value, na.rm = T)) %>% 
+  mutate(sd = ifelse(is.na(sd), 0, sd)) %>% 
+  gather(metric, value, -Genus, -Species, -variable) %>% 
+  mutate(variable = paste0(variable, "_", metric)) %>% 
+  select(-metric) %>% 
+  pivot_wider(values_from = value, names_from = variable)
+```
+
+```{r p50leafstemv1, fig.width=6, fig.height=6}
+ggplot(data, aes(P50stem_median, P50leaf_median)) + 
+  geom_smooth(method = lm, color = "darkred", fill = "#000000", se = T) +
+  geom_abline(linetype = "dashed", size = 0.8) +
+  geom_point(size = 4, color = "black") +
+  geom_errorbar(aes(ymin = P50leaf_median - P50leaf_sd, 
+                    ymax = P50leaf_median + P50leaf_sd)) +
+  geom_errorbar(aes(xmin = P50stem_median - P50stem_sd, 
+                    xmax = P50stem_median + P50stem_sd)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 24), 
+        axis.text=element_text(color = "black"), 
+        legend.position = "none") +
+  scale_x_continuous(limits = c(-8.5,-1), breaks = seq(-8,-1,1)) +
+  scale_y_continuous(limits = c(-7,-1), breaks = seq(-5,-2,1)) +
+  ylab(expression(P[paste(50,",",leaf)]~(MPa))) + 
+  xlab (expression(P[paste(50,",",stem)]~(MPa)))
+```
+
+```{r p50leafstemv2, fig.width=6, fig.height=6}
+ggplot(data, aes(P50stem_median, P50leaf_median)) + 
+  geom_smooth(method = lm, color = "darkred", fill = "#000000", se = T) +
+  geom_abline(linetype = "dashed", size = 0.8) +
+  geom_point(size = 4, color = "black") +
+  geom_errorbar(aes(ymin = P50leaf_median - P50leaf_sd,
+                    ymax = P50leaf_median + P50leaf_sd,
+                    width = 0.2)) +
+  geom_errorbar(aes(xmin = P50stem_median - P50stem_sd,
+                    xmax = P50stem_median + P50stem_sd,
+                    width = 0.2)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 24), 
+        axis.text=element_text(color = "black"), 
+        legend.position = "none") +
+  scale_x_continuous(limits = c(-8.5,-1), breaks = seq(-8,-1,1)) +
+  scale_y_continuous(limits = c(-7,-1), breaks = seq(-5,-2,1)) +
+  ylab(expression(P[paste(50,",",leaf)]~(MPa))) + 
+  xlab (expression(P[paste(50,",",stem)]~(MPa)))
+```
+
+
+## Old
+
+### Data
+
+```{r dataold}
 ind <- readxl::read_excel("data/camille/DATABASE_Canopy.xlsx", "All_data_Ind") %>% 
   separate("Species...1", c("Genus", "Species")) %>% 
   filter(!is.na(XUTM)) %>% 
@@ -41,7 +117,7 @@ agr <- readxl::read_excel("data/camille/DATABASE_Canopy.xlsx", "All_data_Ind") %
 ind$AGR <- agr$AGR
 ```
 
-## Normality
+### Normality
 
 ```{r distributionsraw}
 ind %>% 
@@ -63,7 +139,7 @@ ind %>%
   ggtitle("Distribution log and abs transformed")
 ```
 
-## Figure 1
+### Figure 1
 
 ```{r}
 m1 <- lm(P50stem ~ P50leaf, ind)
@@ -111,7 +187,7 @@ g4 <- ggplot(ind, aes(P50leaf, gmin)) +
 (g1 + g2) / (g3 + g4)
 ```
 
-## Figure 2
+### Figure 2
 
 ```{r fig2, fig.height=7, fig.width=7}
 g1 <- ind %>% 
@@ -158,7 +234,7 @@ g4 <- ind %>%
 (g1 + g2) / (g3 + g4)
 ```
 
-## Figure 3
+### Figure 3
 
 ```{r}
 data <- select(ind, PLCstem, P50stem, 
@@ -170,7 +246,7 @@ m2 <- lm(log(PLCstem) ~ SegP50, data)
 anova(m0, m1, m2)
 ```
 
-## Figure 5
+### Figure 5
 
 ```{r}
 data <- ind %>% 
@@ -201,7 +277,7 @@ ggplot(datag, aes(HAND, value)) +
   ylab("") + xlab("HAND (m)")
 ```
 
-## Figure 6
+### Figure 6
 
 ```{r}
 data <- ind %>% 
@@ -249,9 +325,9 @@ ggplot(data, aes(Mortality, gbark)) +
 ```
 
 
-## Figure 7
+### Figure 7
 
-```{r}
+```{r, eval=F}
 data <- ind %>% 
   rename(AlAs = `Al:As`) %>% 
   select(AGR, Ptlp, P50leaf, P50stem, gmin, gbark, AlAs) %>% 
@@ -282,7 +358,7 @@ ggplot(datag, aes(value, AGR)) +
   geom_smooth(method = "lm", data = filter(datag, variable %in% c("gbark", "gmin", "P50stem")))
 ```
 
-```{r}
+```{r, eval=F}
 datag2 <- select(data, gbark, gmin, P50stem, AGR) %>% 
   gather(variable, value, -AGR) %>% 
   na.omit() %>% 
@@ -305,7 +381,7 @@ ggplot(datag2, aes(value, AGR)) +
 ```
 
 
-## Figure S2
+### Figure S2
 
 ```{r figs2}
 ind %>% 
@@ -316,7 +392,7 @@ ind %>%
                      col = colorRampPalette(c("blue", "white","red"))(100))
 ```
 
-## Figure S4
+### Figure S4
 
 ```{r figs4}
 ind %>% 
