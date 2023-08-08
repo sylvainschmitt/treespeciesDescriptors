@@ -23,7 +23,7 @@
 <meta name="author" content="Sylvain Schmitt" />
 
 
-<meta name="date" content="2023-05-02" />
+<meta name="date" content="2023-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -173,6 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.8" data-path="tests.html"><a href="tests.html#figure-7"><i class="fa fa-check"></i><b>3.2.8</b> Figure 7</a></li>
 <li class="chapter" data-level="3.2.9" data-path="tests.html"><a href="tests.html#figure-s2"><i class="fa fa-check"></i><b>3.2.9</b> Figure S2</a></li>
 <li class="chapter" data-level="3.2.10" data-path="tests.html"><a href="tests.html#figure-s4"><i class="fa fa-check"></i><b>3.2.10</b> Figure S4</a></li>
+<li class="chapter" data-level="3.2.11" data-path="tests.html"><a href="tests.html#acp"><i class="fa fa-check"></i><b>3.2.11</b> ACP</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -201,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Repository to develop descriptors of the environment and performance of tropical tree species in Paracou for the Camille and Sebastien analyses.</p>
 <div id="species" class="section level2 hasAnchor" number="0.1">
 <h2><span class="header-section-number">0.1</span> Species<a href="introduction.html#species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&quot;data/Species_list.xlsx&quot;</span>)</span>
-<span id="cb1-2"><a href="introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(species, <span class="at">caption =</span> <span class="st">&quot;Studied species&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" tabindex="-1"></a>species <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&quot;data/Species_list.xlsx&quot;</span>)</span>
+<span id="cb1-2"><a href="introduction.html#cb1-2" tabindex="-1"></a><span class="fu">kable</span>(species, <span class="at">caption =</span> <span class="st">&quot;Studied species&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:introsp">Table 0.1: </span>Studied species</caption>
 <thead>
@@ -273,18 +274,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="individuals" class="section level2 hasAnchor" number="0.2">
 <h2><span class="header-section-number">0.2</span> Individuals<a href="introduction.html#individuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction.html#cb2-1" aria-hidden="true" tabindex="-1"></a>guyafor <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">&quot;data/guyafor.sql&quot;</span>)</span>
-<span id="cb2-2"><a href="introduction.html#cb2-2" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">tbl</span>(guyafor, <span class="st">&quot;inventory&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="introduction.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Forest <span class="sc">==</span> <span class="st">&quot;Paracou&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="introduction.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">paste</span>(Genus, Species) <span class="sc">%in%</span> <span class="fu">local</span>(species<span class="sc">$</span>Species)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="introduction.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="introduction.html#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr<span class="sc">/</span>pi)</span>
-<span id="cb2-7"><a href="introduction.html#cb2-7" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(guyafor) ; <span class="fu">rm</span>(guyafor)</span>
-<span id="cb2-8"><a href="introduction.html#cb2-8" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom_write</span>(trees, <span class="st">&quot;data/paracou.tsv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>, <span class="at">show_col_types =</span> F) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="introduction.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="introduction.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="introduction.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Number of individuals per species&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction.html#cb2-1" tabindex="-1"></a>guyafor <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">&quot;data/guyafor.sql&quot;</span>)</span>
+<span id="cb2-2"><a href="introduction.html#cb2-2" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">tbl</span>(guyafor, <span class="st">&quot;inventory&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="introduction.html#cb2-3" tabindex="-1"></a>  <span class="fu">filter</span>(Forest <span class="sc">==</span> <span class="st">&quot;Paracou&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="introduction.html#cb2-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">paste</span>(Genus, Species) <span class="sc">%in%</span> <span class="fu">local</span>(species<span class="sc">$</span>Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="introduction.html#cb2-5" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="introduction.html#cb2-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr<span class="sc">/</span>pi)</span>
+<span id="cb2-7"><a href="introduction.html#cb2-7" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(guyafor) ; <span class="fu">rm</span>(guyafor)</span>
+<span id="cb2-8"><a href="introduction.html#cb2-8" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom_write</span>(trees, <span class="st">&quot;data/paracou.tsv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">&quot;data/paracou.tsv&quot;</span>, <span class="at">show_col_types =</span> F) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="introduction.html#cb3-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="introduction.html#cb3-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="introduction.html#cb3-4" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Number of individuals per species&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:introparacoutab">Table 0.2: </span>Number of individuals per species</caption>
 <thead>
