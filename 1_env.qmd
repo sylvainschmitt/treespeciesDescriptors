@@ -48,6 +48,15 @@ paracou <- paracou %>%
 
 # save
 vroom::vroom_write(paracou, "data/paracou_env.tsv")
+
+# ind env
+inds <- readxl::read_xlsx("data/TREE_list_Paracou.xlsx") %>% 
+  filter(!is.na(XUTM), !is.na(YUTM))
+inds_xy <- inds %>% 
+  st_as_sf(coords = c("XUTM", "YUTM"),
+           crs = '+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0')
+inds$hand <- extract(rast("data/RelativeElevation_1m.tif"), vect(inds_xy))$RelativeElevation
+vroom::vroom_write(inds, "data/inds_env.tsv")
 ```
 
 ## TWI: Topographic Wetness Index

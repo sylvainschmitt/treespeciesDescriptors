@@ -639,48 +639,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/paracou.tsv"</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>paracou0 <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/paracou.tsv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(BotaSource <span class="sc">==</span> <span class="st">"Bota"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Xutm), <span class="sc">!</span><span class="fu">is.na</span>(Yutm))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>paracouXY <span class="ot">&lt;-</span> paracou <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>paracouXY <span class="ot">&lt;-</span> paracou0 <span class="sc">%&gt;%</span> </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>),</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">crs =</span> <span class="st">'+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> <span class="fu">left_join</span>(paracou,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> <span class="fu">left_join</span>(paracou0,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">st_intersection</span>(<span class="fu">st_read</span>(<span class="st">"data/TopographicLevels/TopographicLevels.shp"</span>), paracouXY) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(idTree, TypeTopoEN))</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>paracou <span class="sc">%&gt;%</span> </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">death =</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(MeasCode <span class="sc">%in%</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>), <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_min =</span> <span class="fu">min</span>(CensusYear),</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_max =</span> <span class="fu">max</span>(CensusYear)) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mortality =</span> <span class="fu">sum</span>(death) <span class="sc">/</span> <span class="fu">n</span>() <span class="sc">/</span> (<span class="fu">max</span>(y_max) <span class="sc">-</span> <span class="fu">min</span>(y_min)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TypeTopoEN, <span class="at">values_from =</span> mortality) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">"data/species_treefall.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(idTree, TypeTopoEN)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(paracou0 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">TypeTopoEN =</span> <span class="st">"All"</span>))</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>paracou <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">death =</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(MeasCode <span class="sc">%in%</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>), <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_min =</span> <span class="fu">min</span>(CensusYear),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_max =</span> <span class="fu">max</span>(CensusYear)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mortality =</span> <span class="fu">sum</span>(death) <span class="sc">/</span> <span class="fu">n</span>() <span class="sc">/</span> (<span class="fu">max</span>(y_max) <span class="sc">-</span> <span class="fu">min</span>(y_min)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TypeTopoEN, <span class="at">values_from =</span> mortality) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">"data/species_treefall.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/species_treefall.tsv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">"NA"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Annual treefall rate across species (%/year)."</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Annual treefall rate across species (%/year)."</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Annual treefall rate across species (%/year).</caption>
 <colgroup>
-<col style="width: 18%">
-<col style="width: 39%">
-<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 34%">
+<col style="width: 11%">
 <col style="width: 13%">
-<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Genus</th>
 <th style="text-align: left;">Species</th>
+<th style="text-align: right;">All</th>
 <th style="text-align: right;">Bottomland</th>
 <th style="text-align: right;">Plateau</th>
 <th style="text-align: right;">Slope</th>
@@ -690,6 +693,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Bocoa</td>
 <td style="text-align: left;">prouacensis</td>
+<td style="text-align: right;">0.4463461</td>
 <td style="text-align: right;">0.4598558</td>
 <td style="text-align: right;">0.4004004</td>
 <td style="text-align: right;">0.5426784</td>
@@ -697,6 +701,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Chaetocarpus</td>
 <td style="text-align: left;">schomburgkianus</td>
+<td style="text-align: right;">0.2558384</td>
 <td style="text-align: right;">0.3205128</td>
 <td style="text-align: right;">0.1923077</td>
 <td style="text-align: right;">0.3258845</td>
@@ -704,6 +709,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Chrysophyllum</td>
 <td style="text-align: left;">sanguinolentum</td>
+<td style="text-align: right;">0.5106851</td>
 <td style="text-align: right;">0.4444444</td>
 <td style="text-align: right;">0.5675030</td>
 <td style="text-align: right;">0.5847953</td>
@@ -711,6 +717,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Dicorynia</td>
 <td style="text-align: left;">guianensis</td>
+<td style="text-align: right;">0.3143906</td>
 <td style="text-align: right;">0.4396483</td>
 <td style="text-align: right;">0.2509519</td>
 <td style="text-align: right;">0.3241969</td>
@@ -718,6 +725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Eperua</td>
 <td style="text-align: left;">falcata</td>
+<td style="text-align: right;">0.2464443</td>
 <td style="text-align: right;">0.3461129</td>
 <td style="text-align: right;">0.1929970</td>
 <td style="text-align: right;">0.1837346</td>
@@ -725,6 +733,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Eperua</td>
 <td style="text-align: left;">grandiflora</td>
+<td style="text-align: right;">0.2503691</td>
 <td style="text-align: right;">0.4077472</td>
 <td style="text-align: right;">0.1884628</td>
 <td style="text-align: right;">0.2680965</td>
@@ -732,6 +741,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Eschweilera</td>
 <td style="text-align: left;">sagotiana</td>
+<td style="text-align: right;">0.2367438</td>
 <td style="text-align: right;">0.2903005</td>
 <td style="text-align: right;">0.2192982</td>
 <td style="text-align: right;">0.2398217</td>
@@ -739,6 +749,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Goupia</td>
 <td style="text-align: left;">glabra</td>
+<td style="text-align: right;">0.1595345</td>
 <td style="text-align: right;">0.3768844</td>
 <td style="text-align: right;">0.1831502</td>
 <td style="text-align: right;">0.2415459</td>
@@ -746,6 +757,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Gustavia</td>
 <td style="text-align: left;">hexapetala</td>
+<td style="text-align: right;">0.3011657</td>
 <td style="text-align: right;">0.3415829</td>
 <td style="text-align: right;">0.3614916</td>
 <td style="text-align: right;">0.3035823</td>
@@ -753,6 +765,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Lecythis</td>
 <td style="text-align: left;">persistens subsp. aurantiaca</td>
+<td style="text-align: right;">0.3114179</td>
 <td style="text-align: right;">0.3256891</td>
 <td style="text-align: right;">0.2443894</td>
 <td style="text-align: right;">0.3533859</td>
@@ -760,6 +773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Lecythis</td>
 <td style="text-align: left;">poiteaui</td>
+<td style="text-align: right;">0.2488422</td>
 <td style="text-align: right;">0.4295533</td>
 <td style="text-align: right;">0.1851852</td>
 <td style="text-align: right;">0.2433090</td>
@@ -767,6 +781,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Licania</td>
 <td style="text-align: left;">membranacea</td>
+<td style="text-align: right;">0.3948296</td>
 <td style="text-align: right;">0.6284153</td>
 <td style="text-align: right;">0.2881844</td>
 <td style="text-align: right;">0.3488077</td>
@@ -774,6 +789,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Manilkara</td>
 <td style="text-align: left;">bidentata</td>
+<td style="text-align: right;">0.2664636</td>
 <td style="text-align: right;">0.2688172</td>
 <td style="text-align: right;">0.1773050</td>
 <td style="text-align: right;">0.3086420</td>
@@ -781,6 +797,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Pradosia</td>
 <td style="text-align: left;">cochlearia</td>
+<td style="text-align: right;">0.2825807</td>
 <td style="text-align: right;">0.3340366</td>
 <td style="text-align: right;">0.2681518</td>
 <td style="text-align: right;">0.3220612</td>
@@ -788,6 +805,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Protium</td>
 <td style="text-align: left;">opacum subsp. rabelianum</td>
+<td style="text-align: right;">0.4574731</td>
 <td style="text-align: right;">0.5102041</td>
 <td style="text-align: right;">0.4115226</td>
 <td style="text-align: right;">0.3594771</td>
@@ -795,6 +813,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Qualea</td>
 <td style="text-align: left;">rosea</td>
+<td style="text-align: right;">0.3144797</td>
 <td style="text-align: right;">0.3877447</td>
 <td style="text-align: right;">0.2298851</td>
 <td style="text-align: right;">0.3242780</td>
@@ -802,6 +821,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Symphonia</td>
 <td style="text-align: left;">sp.1</td>
+<td style="text-align: right;">0.2571016</td>
 <td style="text-align: right;">0.3051347</td>
 <td style="text-align: right;">0.2072968</td>
 <td style="text-align: right;">0.2629849</td>
@@ -809,6 +829,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Tachigali</td>
 <td style="text-align: left;">melinonii</td>
+<td style="text-align: right;">0.3076923</td>
 <td style="text-align: right;">0.5314010</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.1984127</td>
@@ -816,6 +837,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Virola</td>
 <td style="text-align: left;">michelii</td>
+<td style="text-align: right;">0.3742204</td>
 <td style="text-align: right;">0.5827506</td>
 <td style="text-align: right;">0.3780408</td>
 <td style="text-align: right;">0.3036437</td>
@@ -828,17 +850,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/species_treefall.tsv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">"NA"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(habitat, mortality, <span class="sc">-</span>Genus, <span class="sc">-</span>Species, <span class="sc">-</span>Plateau) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Plateau, mortality, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">str_sub</span>(Genus, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">". "</span>, Species))) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> habitat) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>() <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"treefall in Planteau"</span>) <span class="sc">+</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"treefall in other habitats"</span>) <span class="sc">+</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(habitat, mortality, <span class="sc">-</span>Genus, <span class="sc">-</span>Species, <span class="sc">-</span>Plateau) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Plateau, mortality, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">str_sub</span>(Genus, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">". "</span>, Species))) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> habitat) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"treefall in Planteau"</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"treefall in other habitats"</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="2_perf_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
@@ -850,48 +871,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/paracou.tsv"</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>paracou0 <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/paracou.tsv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(BotaSource <span class="sc">==</span> <span class="st">"Bota"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Xutm), <span class="sc">!</span><span class="fu">is.na</span>(Yutm))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>paracouXY <span class="ot">&lt;-</span> paracou <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>paracouXY <span class="ot">&lt;-</span> paracou0 <span class="sc">%&gt;%</span> </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Xutm"</span>, <span class="st">"Yutm"</span>),</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">crs =</span> <span class="st">'+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> <span class="fu">left_join</span>(paracou,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>paracou <span class="ot">&lt;-</span> <span class="fu">left_join</span>(paracou0,</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">st_intersection</span>(<span class="fu">st_read</span>(<span class="st">"data/TopographicLevels/TopographicLevels.shp"</span>), paracouXY) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(idTree, TypeTopoEN))</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>paracou <span class="sc">%&gt;%</span> </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">death =</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(MeasCode <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span> <span class="dv">0</span>), <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_min =</span> <span class="fu">min</span>(CensusYear),</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_max =</span> <span class="fu">max</span>(CensusYear)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mortality =</span> <span class="fu">sum</span>(death) <span class="sc">/</span> <span class="fu">n</span>() <span class="sc">/</span> (<span class="fu">max</span>(y_max) <span class="sc">-</span> <span class="fu">min</span>(y_min)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TypeTopoEN, <span class="at">values_from =</span> mortality) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">"data/species_deadstanding.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(idTree, TypeTopoEN)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(paracou0 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">TypeTopoEN =</span> <span class="st">"All"</span>))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>paracou <span class="sc">%&gt;%</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species, idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">death =</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(MeasCode <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span> <span class="dv">0</span>), <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_min =</span> <span class="fu">min</span>(CensusYear),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">y_max =</span> <span class="fu">max</span>(CensusYear)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TypeTopoEN, Genus, Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mortality =</span> <span class="fu">sum</span>(death) <span class="sc">/</span> <span class="fu">n</span>() <span class="sc">/</span> (<span class="fu">max</span>(y_max) <span class="sc">-</span> <span class="fu">min</span>(y_min)) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TypeTopoEN, <span class="at">values_from =</span> mortality) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  vroom<span class="sc">::</span><span class="fu">vroom_write</span>(<span class="st">"data/species_deadstanding.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/species_deadstanding.tsv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">"NA"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Annual dead standing rate across species (%/year)."</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Annual dead standing rate across species (%/year)."</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Annual dead standing rate across species (%/year).</caption>
 <colgroup>
-<col style="width: 18%">
-<col style="width: 39%">
-<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 34%">
+<col style="width: 11%">
 <col style="width: 13%">
-<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Genus</th>
 <th style="text-align: left;">Species</th>
+<th style="text-align: right;">All</th>
 <th style="text-align: right;">Bottomland</th>
 <th style="text-align: right;">Plateau</th>
 <th style="text-align: right;">Slope</th>
@@ -901,6 +925,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Bocoa</td>
 <td style="text-align: left;">prouacensis</td>
+<td style="text-align: right;">0.2647294</td>
 <td style="text-align: right;">0.2672135</td>
 <td style="text-align: right;">0.2669336</td>
 <td style="text-align: right;">0.2989330</td>
@@ -908,6 +933,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Chaetocarpus</td>
 <td style="text-align: left;">schomburgkianus</td>
+<td style="text-align: right;">0.1246392</td>
 <td style="text-align: right;">0.0712251</td>
 <td style="text-align: right;">0.1282051</td>
 <td style="text-align: right;">0.1707014</td>
@@ -915,6 +941,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Chrysophyllum</td>
 <td style="text-align: left;">sanguinolentum</td>
+<td style="text-align: right;">0.2749843</td>
 <td style="text-align: right;">0.2500000</td>
 <td style="text-align: right;">0.3584229</td>
 <td style="text-align: right;">0.2715121</td>
@@ -922,6 +949,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Dicorynia</td>
 <td style="text-align: left;">guianensis</td>
+<td style="text-align: right;">0.0871840</td>
 <td style="text-align: right;">0.0799361</td>
 <td style="text-align: right;">0.0865351</td>
 <td style="text-align: right;">0.0515768</td>
@@ -929,6 +957,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Eperua</td>
 <td style="text-align: left;">falcata</td>
+<td style="text-align: right;">0.1473209</td>
 <td style="text-align: right;">0.1375577</td>
 <td style="text-align: right;">0.1309622</td>
 <td style="text-align: right;">0.1764820</td>
@@ -936,6 +965,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Eperua</td>
 <td style="text-align: left;">grandiflora</td>
+<td style="text-align: right;">0.1412339</td>
 <td style="text-align: right;">0.0764526</td>
 <td style="text-align: right;">0.1638807</td>
 <td style="text-align: right;">0.1340483</td>
@@ -943,6 +973,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Eschweilera</td>
 <td style="text-align: left;">sagotiana</td>
+<td style="text-align: right;">0.1080787</td>
 <td style="text-align: right;">0.0967668</td>
 <td style="text-align: right;">0.1109095</td>
 <td style="text-align: right;">0.1208550</td>
@@ -950,6 +981,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Goupia</td>
 <td style="text-align: left;">glabra</td>
+<td style="text-align: right;">0.1858108</td>
 <td style="text-align: right;">0.1395868</td>
 <td style="text-align: right;">0.0915751</td>
 <td style="text-align: right;">0.1509662</td>
@@ -957,6 +989,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Gustavia</td>
 <td style="text-align: left;">hexapetala</td>
+<td style="text-align: right;">0.1921230</td>
 <td style="text-align: right;">0.1869038</td>
 <td style="text-align: right;">0.1522070</td>
 <td style="text-align: right;">0.2125076</td>
@@ -964,6 +997,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Lecythis</td>
 <td style="text-align: left;">persistens subsp. aurantiaca</td>
+<td style="text-align: right;">0.1399694</td>
 <td style="text-align: right;">0.1305448</td>
 <td style="text-align: right;">0.2237367</td>
 <td style="text-align: right;">0.1183432</td>
@@ -971,6 +1005,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Lecythis</td>
 <td style="text-align: left;">poiteaui</td>
+<td style="text-align: right;">0.0967720</td>
 <td style="text-align: right;">0.0859107</td>
 <td style="text-align: right;">0.1234568</td>
 <td style="text-align: right;">0.0811030</td>
@@ -978,6 +1013,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Licania</td>
 <td style="text-align: left;">membranacea</td>
+<td style="text-align: right;">0.1433608</td>
 <td style="text-align: right;">0.1457195</td>
 <td style="text-align: right;">0.1120717</td>
 <td style="text-align: right;">0.1458650</td>
@@ -985,6 +1021,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Manilkara</td>
 <td style="text-align: left;">bidentata</td>
+<td style="text-align: right;">0.1776424</td>
 <td style="text-align: right;">0.1792115</td>
 <td style="text-align: right;">0.1182033</td>
 <td style="text-align: right;">0.2469136</td>
@@ -992,6 +1029,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Pradosia</td>
 <td style="text-align: left;">cochlearia</td>
+<td style="text-align: right;">0.1538806</td>
 <td style="text-align: right;">0.1054852</td>
 <td style="text-align: right;">0.2062706</td>
 <td style="text-align: right;">0.1288245</td>
@@ -999,6 +1037,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Protium</td>
 <td style="text-align: left;">opacum subsp. rabelianum</td>
+<td style="text-align: right;">0.1625233</td>
 <td style="text-align: right;">0.1133787</td>
 <td style="text-align: right;">0.2057613</td>
 <td style="text-align: right;">0.1960784</td>
@@ -1006,6 +1045,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Qualea</td>
 <td style="text-align: left;">rosea</td>
+<td style="text-align: right;">0.2483934</td>
 <td style="text-align: right;">0.2860412</td>
 <td style="text-align: right;">0.2586207</td>
 <td style="text-align: right;">0.2263828</td>
@@ -1013,6 +1053,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Symphonia</td>
 <td style="text-align: left;">sp.1</td>
+<td style="text-align: right;">0.1849878</td>
 <td style="text-align: right;">0.1788721</td>
 <td style="text-align: right;">0.1796573</td>
 <td style="text-align: right;">0.1890204</td>
@@ -1020,6 +1061,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">Tachigali</td>
 <td style="text-align: left;">melinonii</td>
+<td style="text-align: right;">0.2910603</td>
 <td style="text-align: right;">0.2173913</td>
 <td style="text-align: right;">0.3411306</td>
 <td style="text-align: right;">0.3968254</td>
@@ -1027,6 +1069,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Virola</td>
 <td style="text-align: left;">michelii</td>
+<td style="text-align: right;">0.1709402</td>
 <td style="text-align: right;">0.0971251</td>
 <td style="text-align: right;">0.1808021</td>
 <td style="text-align: right;">0.2136752</td>
@@ -1039,17 +1082,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"data/species_deadstanding.tsv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">"NA"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(habitat, mortality, <span class="sc">-</span>Genus, <span class="sc">-</span>Species, <span class="sc">-</span>Plateau) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Plateau, mortality, </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">str_sub</span>(Genus, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">". "</span>, Species))) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> habitat) <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>() <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"dead standing in Planteau"</span>) <span class="sc">+</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"dead standing in other habitats"</span>) <span class="sc">+</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(habitat, mortality, <span class="sc">-</span>Genus, <span class="sc">-</span>Species, <span class="sc">-</span>Plateau) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Plateau, mortality, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">str_sub</span>(Genus, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">". "</span>, Species))) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> habitat) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">stat_cor</span>() <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"dead standing in Planteau"</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"dead standing in other habitats"</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="2_perf_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>

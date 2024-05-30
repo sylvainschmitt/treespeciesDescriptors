@@ -113,16 +113,17 @@ vroom::vroom("data/species_mortality.tsv") %>%
 ## Treefall
 
 ```{r treefalldata, eval=F}
-paracou <- vroom::vroom("data/paracou.tsv") %>% 
+paracou0 <- vroom::vroom("data/paracou.tsv") %>% 
   filter(BotaSource == "Bota") %>% 
   filter(!is.na(Xutm), !is.na(Yutm))
-paracouXY <- paracou %>% 
+paracouXY <- paracou0 %>% 
   st_as_sf(coords = c("Xutm", "Yutm"),
            crs = '+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0')
-paracou <- left_join(paracou,
+paracou <- left_join(paracou0,
           st_intersection(st_read("data/TopographicLevels/TopographicLevels.shp"), paracouXY) %>% 
             st_drop_geometry() %>% 
-            select(idTree, TypeTopoEN))
+            select(idTree, TypeTopoEN)) %>% 
+  bind_rows(paracou0 %>% mutate(TypeTopoEN = "All"))
 paracou %>% 
   group_by(TypeTopoEN, Genus, Species, idTree) %>% 
   summarise(death = ifelse(any(MeasCode %in% 6:7), 1, 0),
@@ -130,6 +131,7 @@ paracou %>%
             y_max = max(CensusYear)) %>% 
   group_by(TypeTopoEN, Genus, Species) %>% 
   summarise(mortality = sum(death) / n() / (max(y_max) - min(y_min)) * 100) %>% 
+  na.omit() %>% 
   pivot_wider(names_from = TypeTopoEN, values_from = mortality) %>% 
   vroom::vroom_write("data/species_treefall.tsv")
 ```
@@ -137,7 +139,6 @@ paracou %>%
 ```{r treefalltab}
 #| message: false
 vroom::vroom("data/species_treefall.tsv") %>% 
-  select(-"NA") %>% 
   kable(caption = "Annual treefall rate across species (%/year).") 
 ```
 
@@ -145,7 +146,6 @@ vroom::vroom("data/species_treefall.tsv") %>%
 #| message: false
 #| warning: false
 vroom::vroom("data/species_treefall.tsv") %>% 
-  select(-"NA") %>% 
   gather(habitat, mortality, -Genus, -Species, -Plateau) %>% 
   ggplot(aes(Plateau, mortality, 
              label = paste0(str_sub(Genus, 1, 1), ". ", Species))) +
@@ -161,16 +161,17 @@ vroom::vroom("data/species_treefall.tsv") %>%
 ## Dead standing
 
 ```{r deadstandingdata, eval=F}
-paracou <- vroom::vroom("data/paracou.tsv") %>% 
+paracou0 <- vroom::vroom("data/paracou.tsv") %>% 
   filter(BotaSource == "Bota") %>% 
   filter(!is.na(Xutm), !is.na(Yutm))
-paracouXY <- paracou %>% 
+paracouXY <- paracou0 %>% 
   st_as_sf(coords = c("Xutm", "Yutm"),
            crs = '+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0')
-paracou <- left_join(paracou,
+paracou <- left_join(paracou0,
           st_intersection(st_read("data/TopographicLevels/TopographicLevels.shp"), paracouXY) %>% 
             st_drop_geometry() %>% 
-            select(idTree, TypeTopoEN))
+            select(idTree, TypeTopoEN)) %>% 
+  bind_rows(paracou0 %>% mutate(TypeTopoEN = "All"))
 paracou %>% 
   group_by(TypeTopoEN, Genus, Species, idTree) %>% 
   summarise(death = ifelse(any(MeasCode == 0 & CodeAlive == 0), 1, 0),
@@ -178,6 +179,7 @@ paracou %>%
             y_max = max(CensusYear)) %>% 
   group_by(TypeTopoEN, Genus, Species) %>% 
   summarise(mortality = sum(death) / n() / (max(y_max) - min(y_min)) * 100) %>% 
+  na.omit() %>% 
   pivot_wider(names_from = TypeTopoEN, values_from = mortality) %>% 
   vroom::vroom_write("data/species_deadstanding.tsv")
 ```
@@ -185,7 +187,6 @@ paracou %>%
 ```{r deadstandingtab}
 #| message: false
 vroom::vroom("data/species_deadstanding.tsv") %>% 
-  select(-"NA") %>% 
   kable(caption = "Annual dead standing rate across species (%/year).") 
 ```
 
@@ -193,7 +194,6 @@ vroom::vroom("data/species_deadstanding.tsv") %>%
 #| message: false
 #| warning: false
 vroom::vroom("data/species_deadstanding.tsv") %>% 
-  select(-"NA") %>% 
   gather(habitat, mortality, -Genus, -Species, -Plateau) %>% 
   ggplot(aes(Plateau, mortality, 
              label = paste0(str_sub(Genus, 1, 1), ". ", Species))) +
