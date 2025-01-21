@@ -37,12 +37,31 @@ paracou %>%
   group_by(TypeTopoEN, Genus, Species) %>% 
   summarise(AGR = median(AGR)) %>% 
   pivot_wider(names_from = TypeTopoEN, values_from = AGR) %>% 
+  vroom::vroom_write("data/species_growth_hab.tsv")
+
+t <- paracou %>% 
+  group_by(Genus, Species, idTree) %>% 
+  arrange(CensusYear) %>% 
+  mutate(FirstDead = first(CensusYear[CodeAlive == 0])) %>% 
+  mutate(FirstDead = ifelse(is.na(FirstDead), max(CensusYear)+1, FirstDead)) %>% 
+  filter(CensusYear < FirstDead) %>% 
+  summarise(AGR = (last(DBH) - first(DBH))/(last(CensusYear) - first(CensusYear)),
+            RGR = (last(DBH) - first(DBH))/(last(CensusYear) - first(CensusYear))/first(DBH))
+t %>% 
+  group_by(Genus, Species) %>% 
+  gather(variable, value, -Genus, -Species, -idTree) %>% 
+  filter(value > 0) %>% 
+  mutate(log_value = log(value)) %>% 
+  group_by(Genus, Species, variable) %>% 
+  summarise(median = median(value), 
+            median_log = median(log_value), 
+            sd_log = sd(log_value)) %>% 
   vroom::vroom_write("data/species_growth.tsv")
 ```
 
 ```{r growthtab}
 #| message: false
-vroom::vroom("data/species_growth.tsv") %>% 
+vroom::vroom("data/species_growth_hab.tsv") %>% 
   kable(caption = "Median of annual growth rate of all individuals across species (cm/year).")  
 ```
 
@@ -60,6 +79,17 @@ vroom::vroom("data/species_growth.tsv") %>%
   xlab("AGR in Planteau") +
   ylab("AGR in other habitats") +
   ggrepel::geom_text_repel()
+```
+
+```{r}
+vroom::vroom("data/species_growth.tsv") %>% 
+  ggplot(aes(paste(Genus, Species), median_log)) +
+  geom_point() +
+  geom_linerange(aes(ymin = median_log-sd_log, ymax = median_log+sd_log)) +
+  theme_bw() +
+  facet_wrap(~ variable) +
+  coord_flip() +
+  theme(axis.title = element_blank(), axis.text.y = element_text(face = "italic"))
 ```
 
 ## Mortality
@@ -84,6 +114,16 @@ paracou %>%
   summarise(mortality = sum(death) / n() / (max(y_max) - min(y_min)) * 100) %>% 
   pivot_wider(names_from = TypeTopoEN, values_from = mortality) %>% 
   vroom::vroom_write("data/species_mortality.tsv")
+vroom::vroom("data/paracou.tsv") %>% 
+  filter(BotaSource == "Bota") %>% 
+  filter(!is.na(Xutm), !is.na(Yutm)) %>% 
+  group_by(Genus, Species, idTree) %>% 
+  summarise(death = ifelse(any(CodeAlive == 0), 1, 0),
+            y_min = min(CensusYear),
+            y_max = max(CensusYear)) %>% 
+  group_by(Genus, Species) %>% 
+  summarise(mortality = sum(death) / n() / (max(y_max) - min(y_min)) * 100) %>% 
+  vroom::vroom_write("data/species_mortality_0.tsv")
 ```
 
 ```{r mortalitytab}
@@ -204,4 +244,61 @@ vroom::vroom("data/species_deadstanding.tsv") %>%
   xlab("dead standing in Planteau") +
   ylab("dead standing in other habitats") +
   ggrepel::geom_text_repel()
+```
+
+## Recruitment
+
+```{r rec_data, eval=F}
+paracou <- vroom::vroom("data/paracou.tsv") %>% 
+  filter(BotaSource == "Bota") %>% 
+  filter(!is.na(Xutm), !is.na(Yutm)) %>% 
+  filter(Plot %in% c(1, 6, 11, 13:14)) %>% 
+  filter(CodeAlive == 1) %>% 
+  mutate(dbh = CircCorr/pi) %>% 
+  filter(dbh >= 10) %>% 
+  mutate(ba_ind = (dbh/2)^2*pi/10^4/6.25) %>% 
+  group_by(Plot, CensusYear, Genus, Species) %>% 
+  mutate(ba_sp_plot = sum(ba_ind)) %>% 
+  group_by(idTree) %>% 
+  mutate(recruit_year = min(CensusYear)) %>%
+  group_by(Plot) %>% 
+  mutate(first_inventory = min(CensusYear)) %>% 
+  ungroup() %>% 
+  filter(recruit_year != first_inventory) %>% 
+  filter(recruit_year == CensusYear)
+paracou_time <- paracou %>% 
+  select(Plot, CensusYear, Genus, Species) %>% 
+  unique() %>% 
+  group_by(Plot) %>% 
+  arrange(CensusYear) %>% 
+  mutate(year_prev = lag(CensusYear)) %>% 
+  mutate(delta_t = CensusYear - year_prev)
+paracou %>% 
+  left_join(paracou_time) %>% 
+  group_by(Plot, Genus, Species, CensusYear, ba_sp_plot, delta_t, year_prev) %>% 
+  summarise(ba_recruit = sum(ba_ind)) %>% 
+  group_by(Genus, Species, Plot) %>% 
+  arrange(CensusYear) %>% 
+  mutate(ba_recruit_pct = ba_recruit/lag(ba_sp_plot)/delta_t) %>% 
+  na.omit() %>%
+  select(Plot, Genus, Species, CensusYear, ba_recruit_pct) %>% 
+  write_tsv("data/species_recruit.tsv")
+```
+
+```{r}
+read_tsv("data/species_recruit.tsv") %>% 
+  ggplot(aes(CensusYear, ba_recruit_pct, col = paste(Genus, Species))) +
+  geom_line() +
+  facet_wrap(~ Plot) +
+  theme_bw() +
+  scale_y_log10()
+```
+
+```{r}
+read_tsv("data/species_recruit.tsv") %>% 
+  ggplot(aes(paste(Genus, Species), ba_recruit_pct)) +
+  geom_boxplot() +
+  theme_bw() +
+  scale_y_log10() +
+  coord_flip()
 ```

@@ -57,6 +57,22 @@ inds_xy <- inds %>%
            crs = '+proj=utm +zone=22 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0')
 inds$hand <- extract(rast("data/RelativeElevation_1m.tif"), vect(inds_xy))$RelativeElevation
 vroom::vroom_write(inds, "data/inds_env.tsv")
+
+# ind env all
+bind_rows(
+  inds %>% 
+  separate("Species...1", c("Genus", "Species")) %>% 
+  select(Genus, Species, Plot, hand) %>% 
+  mutate(sampled = 1) %>% 
+  mutate(Plot = as.character(Plot)) %>% 
+    filter(paste(Genus, Species) %in% 
+             paste(paracou$Genus, paracou$Species)),
+  paracou %>% 
+  select(Genus, Species, Plot, HAND) %>% 
+  rename(hand = HAND) %>% 
+  mutate(sampled = 0)
+) %>% 
+  vroom::vroom_write("data/inds_env2.tsv")
 ```
 
 ## TWI: Topographic Wetness Index
@@ -71,6 +87,30 @@ vroom::vroom("data/paracou_env.tsv") %>%
   coord_flip()
 ```
 
+```{r}
+vroom::vroom("data/paracou_env.tsv") %>% 
+  group_by(Genus, Species) %>% 
+  summarise(twi_min = min(TWI),
+            twi_q1 = quantile(TWI, 0.01),
+            twi_median = median(TWI),
+            twi_mean = mean(TWI),
+            twi_q99 = quantile(TWI, 0.99),
+            twi_max = max(TWI)) %>% 
+  write_tsv("twi_quantiles.tsv")
+```
+
+```{r}
+read_tsv("twi_quantiles.tsv") %>% 
+  gather(quantile, value, -Genus, -Species) %>% 
+  mutate(quantile = gsub("twi_", "", quantile)) %>% 
+  ggplot(aes(paste(Genus, Species), value, col = quantile)) +
+  geom_point() +
+  theme_bw() +
+  coord_flip() +
+  theme(axis.text.y = element_text(face = "italic"),
+        axis.title = element_blank())
+```
+
 ## HAND: Height Above Nearest Drainage
 
 ```{r hand}
@@ -79,6 +119,50 @@ vroom::vroom("data/paracou_env.tsv") %>%
   mutate(species =  paste(Genus, Species)) %>% 
   ggplot(aes(x = species, y = log(HAND+1))) +
   geom_boxplot() +
+  coord_flip()
+```
+
+```{r}
+dat <- vroom::vroom("data/paracou_env.tsv") %>% 
+  mutate(species =  paste(Genus, Species)) %>% 
+  select(species, HAND) %>% 
+  group_by(species) %>% 
+  bind_rows(data.frame(species = "All",
+                       HAND = terra::rast("data/RelativeElevation_1m.tif") %>%
+                         as.vector() %>% na.omit() %>% sample(10^4)))
+g <- ggplot(dat, aes(HAND)) +
+  geom_histogram() +
+  facet_wrap(~ species, scales = "free_y") +
+  geom_vline(aes(xintercept = HAND, col = "Maximum"),
+             data = group_by(dat, species) %>% 
+               summarise(HAND = max(HAND))) +
+  geom_vline(aes(xintercept = HAND, col ="99th quantile"),
+             data = group_by(dat, species) %>% 
+               summarise(HAND = quantile(HAND, .99))) +
+  scale_y_sqrt() +
+  theme(strip.text.x = element_text(size = 8), legend.position = "bottom")
+ggsave("hand.png", g, bg = "white", width = 14)
+```
+
+```{r}
+plot(terra::rast("data/RelativeElevation_1m.tif") > 30)
+```
+
+```{r}
+dat <- vroom::vroom("data/inds_env2.tsv")
+ggplot(dat, aes(paste(Genus, Species), hand)) +
+  geom_violin(data = filter(dat, sampled == 0)) +
+  geom_point(data = filter(dat, sampled == 1),
+             col = "#93c4dd", size = 1) +
+  geom_point(data = group_by(dat, Genus, Species) %>% 
+                 summarise(hand = median(hand)),
+             col = "#93c4dd", size = 3) +
+  geom_point(data = group_by(dat, Genus, Species) %>% 
+                 summarise(hand = quantile(hand, .99)),
+             col = "#e0697c", size = 3) +
+  theme_bw() +
+  xlab("") + ylab("HAND (m)") +
+  theme(axis.text.y = element_text(face = "italic")) +
   coord_flip()
 ```
 
