@@ -257,8 +257,8 @@ paracou <- vroom::vroom("data/paracou.tsv") %>%
   mutate(dbh = CircCorr/pi) %>% 
   filter(dbh >= 10) %>% 
   mutate(ba_ind = (dbh/2)^2*pi/10^4/6.25) %>% 
-  group_by(Plot, CensusYear, Genus, Species) %>% 
-  mutate(ba_sp_plot = sum(ba_ind)) %>% 
+  group_by(CensusYear, Genus, Species) %>% 
+  mutate(ba_sp = sum(ba_ind)) %>% 
   group_by(idTree) %>% 
   mutate(recruit_year = min(CensusYear)) %>%
   group_by(Plot) %>% 
@@ -269,28 +269,28 @@ paracou <- vroom::vroom("data/paracou.tsv") %>%
 paracou_time <- paracou %>% 
   select(Plot, CensusYear, Genus, Species) %>% 
   unique() %>% 
-  group_by(Plot) %>% 
+  group_by(Plot, Genus, Species) %>% 
   arrange(CensusYear) %>% 
   mutate(year_prev = lag(CensusYear)) %>% 
   mutate(delta_t = CensusYear - year_prev)
 paracou %>% 
   left_join(paracou_time) %>% 
-  group_by(Plot, Genus, Species, CensusYear, ba_sp_plot, delta_t, year_prev) %>% 
+  group_by(Genus, Species, CensusYear, ba_sp, delta_t, year_prev) %>% 
   summarise(ba_recruit = sum(ba_ind)) %>% 
-  group_by(Genus, Species, Plot) %>% 
-  arrange(CensusYear) %>% 
-  mutate(ba_recruit_pct = ba_recruit/lag(ba_sp_plot)/delta_t) %>% 
+  group_by(Genus, Species) %>% 
+  arrange(Genus, Species, CensusYear) %>% 
+  mutate(ba_recruit_pct = ba_recruit/lag(ba_sp)/delta_t*100) %>% 
   na.omit() %>%
-  select(Plot, Genus, Species, CensusYear, ba_recruit_pct) %>% 
+  select(Genus, Species, CensusYear, ba_recruit_pct) %>% 
   write_tsv("data/species_recruit.tsv")
 ```
 
 ```{r}
 read_tsv("data/species_recruit.tsv") %>% 
-  ggplot(aes(CensusYear, ba_recruit_pct, col = paste(Genus, Species))) +
+  ggplot(aes(CensusYear, ba_recruit_pct)) +
   geom_line() +
-  facet_wrap(~ Plot) +
   theme_bw() +
+  facet_wrap(~ paste(Genus, Species)) +
   scale_y_log10()
 ```
 
